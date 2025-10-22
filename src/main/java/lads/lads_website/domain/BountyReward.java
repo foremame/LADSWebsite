@@ -2,6 +2,9 @@ package lads.lads_website.domain;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table
 public class BountyReward {
@@ -24,10 +27,13 @@ public class BountyReward {
 
     private Integer sr;
 
+    @OneToMany(mappedBy = "bountyReward", fetch = FetchType.LAZY)
+    private List<PlayerBounty> playerBounties = new ArrayList<>();
+
     public BountyReward() {
     }
 
-    public BountyReward(Long id, String bountyNameType, int level, int staminaCost, String resourceType, Integer n, Integer r, Integer sr) {
+    public BountyReward(Long id, String bountyNameType, int level, int staminaCost, String resourceType, Integer n, Integer r, Integer sr, List<PlayerBounty> playerBounties) {
         this.id = id;
         this.bountyNameType = bountyNameType;
         this.level = level;
@@ -36,6 +42,7 @@ public class BountyReward {
         this.n = n;
         this.r = r;
         this.sr = sr;
+        this.playerBounties = playerBounties;
     }
 
     public Long getId() {
@@ -100,5 +107,13 @@ public class BountyReward {
 
     public void setSr(Integer sr) {
         this.sr = sr;
+    }
+
+    public List<PlayerBounty> getPlayerBounties() {
+        return playerBounties;
+    }
+
+    public void setPlayerBounties(List<PlayerBounty> playerBounties) {
+        this.playerBounties = playerBounties;
     }
 }

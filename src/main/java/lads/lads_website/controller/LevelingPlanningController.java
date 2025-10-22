@@ -24,17 +24,17 @@ public class LevelingPlanningController {
 
     private final AscensionCostService ascensionCostService;
     private final LevelingCostService levelingCostService;
-    private final BountyRewardService bountyRewardService;
+    private final PlayerBountyService playerBountyService;
     private final PlayerService playerService;
     private final PlayerCardService playerCardService;
     private final ResourceTrackingService resourceTrackingService;
     private final ResourceTrackingValuesService resourceTrackingValuesService;
 
     @Autowired
-    public LevelingPlanningController(AscensionCostService ascensionCostService, LevelingCostService levelingCostService, BountyRewardService bountyRewardService, PlayerService playerService, PlayerCardService playerCardService, ResourceTrackingService resourceTrackingService, ResourceTrackingValuesService resourceTrackingValuesService) {
+    public LevelingPlanningController(AscensionCostService ascensionCostService, LevelingCostService levelingCostService, PlayerBountyService playerBountyService, PlayerService playerService, PlayerCardService playerCardService, ResourceTrackingService resourceTrackingService, ResourceTrackingValuesService resourceTrackingValuesService) {
         this.ascensionCostService = ascensionCostService;
         this.levelingCostService = levelingCostService;
-        this.bountyRewardService = bountyRewardService;
+        this.playerBountyService = playerBountyService;
         this.playerService = playerService;
         this.playerCardService = playerCardService;
         this.resourceTrackingService = resourceTrackingService;
@@ -198,7 +198,7 @@ public class LevelingPlanningController {
 
         // This takes the current bounty level the player can clear as a parameter. Don't have a way to get this
         // information currently so will default to 9 (highest level) for now.
-        List<BountyReward> bountyRewards = bountyRewardService.getAllBountyRewardsByLevel(bountyHuntLevel);
+        List<BountyReward> bountyRewards = playerBountyService.getAllBountyRewardsForPlayer(player.getId());
         int totalStamCost = 0;
         int expStamCost = 0;
         int goldStamCost = 0;

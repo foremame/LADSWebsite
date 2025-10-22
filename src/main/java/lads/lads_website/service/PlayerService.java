@@ -29,10 +29,10 @@ public class PlayerService {
         return playerRepository.findById(id);
     }
 
-    public void save(Player player) throws IllegalStateException{
+    public Player save(Player player) throws IllegalStateException{
         validateNewPlayer(player);
         player.setPassword(passwordEncoder.encode(player.getPassword()));
-        playerRepository.save(player);
+        return playerRepository.save(player);
     }
 
     private void validateNewPlayer(Player player) throws IllegalStateException{
