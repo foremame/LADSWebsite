@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Resource Tracking</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Banner Runs: </h1>
+    <table>
+        <tr>
+            <th>Banner Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Run Number</th>
+            <th>Card Pulls</th>
+            <th>Estimated Diamond Cost</th>
+        </tr>
+        <tr th:each="activity : ${activityRunPeriods}">
+            <td th:text="${activity.banner.name}"></td>
+            <td th:text="${activity.startDate}"></td>
+            <td th:text="${activity.endDate}"></td>
+            <td th:text="${activity.runNum}"></td>
+            <td th:text="${cardPullMap.get(activity.id)}"></td>
+            <td th:text="${cardPullMap.get(activity.id) * 150}"></td>
+        </tr>
+    </table>
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addTableSort();
+    });
+
+</script>
+</body>
+</html>

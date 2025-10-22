@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:if="${param.success}">
+        <div class="success-message">
+            <p>Registration Successful! Login <a href="login.html">here</a></p>
+        </div>
+    </div>
+    <h2>Registration</h2>
+    <form action="/player/register" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter Your Username Here" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter Your Email Here" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter Your Password Here" required>
+        </div>
+        <button class="submit" type="submit">Register</button>
+    </form>
+</div>
+<div>
+    <span th:if="${Userexist}" style="color: red;">Username is Taken</span>
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

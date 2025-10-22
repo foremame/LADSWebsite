@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Run Period For Banner/Event</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div id="errorDiv" style="display:none">
+    </div>
+    <form name="activityRunPeriodForm" action="/activityRunPeriod/add" method="post">
+        <div class="form-group" id="activityTypeDiv">
+            <label for="eventOrigin">New Event Rerun:</label>
+            <input type="radio" id="eventOrigin" name="activityType" value="Event">
+            <label for="bannerOrigin">New Banner Rerun:</label>
+            <input type="radio" id="bannerOrigin" name="activityType" value="Banner">
+        </div>
+        <div class="form-group" id="eventDiv" style="display:none">
+            <label for="eventNameSearch">Event:</label>
+            <input type="text" id="eventNameSearch" onkeyup="searchForName('eventNameSearch', 'eventsUL')" placeholder="Search for event name..">
+            <ul id="eventsUL">
+                <li th:each="event: ${events}" style="display:none">
+                    <input type="radio" th:id="${'Event' + event.id}" name="eventId" th:value="${event.id}">
+                    <label th:for="${'Event' + event.id}" th:text="${event.name}"></label>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group" id="bannerDiv" style="display:none">
+            <label for="bannerNameSearch">Banner:</label>
+            <input type="text" id="bannerNameSearch" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
+            <ul id="bannersUL">
+                <li th:each="banner: ${banners}" style="display:none">
+                    <input type="radio" th:id="${'Banner' + banner.id}" name="bannerId" th:value="${banner.id}">
+                    <label th:for="${'Banner' + banner.id}" th:text="${banner.name}"></label>
+                </li>
+            </ul>
+        </div>
+        <div style="display:none" class="form-group" id="startDiv">
+            <label for="startDate">Start Date (YYYY-MM-DD):</label>
+            <input type="text" id="startDate" name="startDate" required>
+        </div>
+        <div style="display:none" class="form-group" id="endDiv">
+            <label for="endDate">End Date (YYYY-MM-DD):</label>
+            <input type="text" id="endDate" name="endDate" required>
+        </div>
+        <button style="display:none" id="btnSubmit" class="submit" type="submit">Submit</button>
+    </form>
+</div>
+<script th:inline="javascript" type="text/javascript">
+    $("form").submit( function(e) {
+        e.preventDefault();
+        $("#errorDiv").hide();
+        $("#errorDiv").empty();
+        var form = this;
+        var issue = false;
+        var errorText = "";
+
+        var activityType = $("input[name='activityType']:checked").val();
+        var activityId = activityType == "Event" ? $("input[name='eventId']:checked").val() : $("input[name='bannerId']:checked").val();
+
+        if (!activityId) {
+            issue = true;
+            errorText += "<p>No " + activityType + " is selected.</p>";
+        }
+
+        var params = {"startDate" : $("#startDate").val(), "endDate" : $("#endDate").val(),
+            "activityType" : activityType, "activityId" : activityId};
+
+        validateByUrl("/activityRunPeriod/validateRunPeriodForm", params, issue, errorText, form);
+    });
+
+    $("input[name='activityType']").change( function() {
+        if ($(this).val() == "Event") {
+            $("#bannerDiv").hide();
+            $("#eventDiv").show();
+        }
+        else {
+            $("#eventDiv").hide();
+            $("#bannerDiv").show();
+        }
+        $("#startDiv").show();
+        $("#endDiv").show();
+        $("#btnSubmit").show();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${'Welcome ' + user.username + '!'}"></h1>
+    <h2>Forms for updating user information:</h2>
+    <p><a href="/cardPull/add">Register new card pull</a></p>
+    <p><a href="/resourceTracking/addPrep">Add to resource tracker</a></p>
+    <p><a href="/playerCard/add">Add new owned card</a></p>
+    <p><a href="/playerCard/update">Update owned card</a></p>
+    <p><a href="/resourceTracking/list">View tracked resources</a></p>
+    <p><a href="/activityRunPeriod/listBanners">View all banner runs</a></p>
+    <p><a href="/activityRunPeriod/listEvents">View all event runs</a></p>
+    <p><a href="/levelingPlanning/startPrep">Leveling Card Cost</a></p>
+    <p><a href="/playerCard/list">View All Owned Cards</a></p>
+    <p><a href="/logout">Logout</a></p>
+    <div th:if="${#strings.equals(user.authorities[0], 'ADMIN')}" id="adminLinks">
+        <h2>Admin links:</h2>
+        <p><a href="/banner/add">Add new banner</a></p>
+        <p><a href="/event/add">Add new event</a></p>
+        <p><a href="/card/add">Add new card</a></p>
+        <p><a href="/activityRunPeriod/add">Add new rerun of an event/banner</a></p>
+    </div>
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+</script>
+</body>
+</html>

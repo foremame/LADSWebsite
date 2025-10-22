@@ -1,0 +1,87 @@
+name,type,start,end,run
+Xspace Echo,B,2024-01-01,2029-01-01,0
+Rippling Echo,B,2024-01-01,2029-01-01,0
+Sky's Embrace,B,2024-01-01,2029-01-01,0
+Heartstring Symphony,B,2024-01-18,2024-01-26,0
+Fireworks Vow,B,2024-01-27,2024-02-04,0
+Veiled Whispers,B,2024-02-05,2024-02-19,0
+Before Dawn,B,2024-02-21,2024-02-29,0
+Special Embrace,B,2024-03-01,2024-03-08,0
+Lingering Gaze,B,2024-03-11,2024-03-23,0
+When Tides Echo,B,2024-04-03,2024-04-17,0
+Heating Up,B,2024-04-19,2024-04-29,0
+Double Kiss,B,2024-04-30,2024-05-10,0
+Shimmering Moonlight,B,2024-05-13,2024-05-27,0
+Dawn's Embrace,B,2024-05-28,2024-06-07,0
+Trace of Divinity,B,2024-06-07,2024-06-21,0
+Entwined Shadows,B,2024-06-25,2024-07-10,0
+No Defense Zone,B,2024-07-15,2024-08-01,0
+Misty Invasion,B,2024-08-07,2024-08-27,0
+Destined Reunion,B,2024-08-31,2024-09-07,0
+Into The Canvas,B,2024-09-10,2024-09-20,0
+Wander In Wonder,B,2024-09-23,2024-10-09,0
+Galaxy Dance,B,2024-10-11,2024-10-18,0
+Radiant Brilliance,B,2024-10-20,2024-10-30,0
+Heartstring Notes,B,2024-10-31,2024-11-10,0
+Yes Cat Caretaker,B,2024-11-12,2024-11-30,0
+Where Drakeshadows Fall,B,2024-12-02,2024-12-16,0
+Silvery Polyphony,B,2024-12-18,2024-12-28,0
+Nightly Rendezvous,B,2024-12-31,2025-01-20,0
+Painful Signal,B,2025-01-22,2025-02-08,0
+Tomorrow's Catch-22,B,2025-02-10,2025-02-27,0
+Boundless Seas,B,2025-03-01,2025-03-08,0
+Special Embrace,B,2025-03-01,2025-03-08,1
+Everlasting Wish,B,2025-03-09,2025-03-18,0
+When Tides Echo,B,2025-03-20,2025-03-27,1
+Fallen Cosmos,B,2025-03-28,2025-04-11,0
+Where Hearts Live,B,2025-04-13,2025-04-20,0
+Shimmering Moonlight,B,2025-04-21,2025-04-28,1
+Spring and Flowers,B,2025-04-30,2025-05-18,0
+Trace Of Divinity,B,2025-05-19,2025-05-26,1
+Feverish Attempts,B,2025-05-29,2025-06-07,0
+No-Return Night,B,2025-06-08,2025-06-15,0
+Submerged Eclipse,B,2025-06-17,2025-07-01,0
+Witnessed By Deepspace,B,2025-07-03,2025-07-22,0
+Fallen Crown,B,2025-07-25,2025-08-08,0
+You And Midsummer,B,2025-08-12,2025-08-31,0
+Dawnbreak Promise,B,2025-08-31,2025-09-07,0
+Destined Reunion,B,2025-08-31,2025-09-07,1
+Passionate Appraisal,B,2025-09-09,2025-09-18,0
+Veiled Whispers,B,2025-09-19,2025-09-26,1
+Edge Of Continuum,B,2025-09-25,2025-10-09,0
+Promise 1,E,2024-01-18,2024-03-16,0
+Promise 2,E,2024-03-17,2024-05-14,0
+Promise 3,E,2024-05-14,2024-07-11,0
+Promise 4,E,2024-07-15,2024-09-11,0
+Promise 5,E,2024-09-14,2024-11-11,0
+Promise 6,E,2024-11-12,2025-01-09,0
+Promise 7,E,2025-01-10,2025-03-08,0
+Promise 8,E,2025-03-09,2025-05-05,0
+Promise 9,E,2025-05-06,2025-07-03,0
+Promise 10,E,2025-07-03,2025-08-30,0
+Promise 11,E,2025-08-31,2025-10-28,0
+Heartbeat Ripples,E,2024-02-21,2024-03-10,0
+Traversing Deepspace,E,2024-02-21,2024-03-10,0
+Miracle Voyage,E,2024-03-01,2024-03-08,0
+Sea Breeze Echo,E,2024-04-04,2024-04-17,0
+Another Dawnbreak,E,2024-05-13,2024-05-27,0
+Yunshan's Charm,E,2024-06-07,2024-06-21,0
+Sweetie Silk,E,2024-08-07,2024-08-27,0
+Very Moment With U,E,2024-08-31,2024-09-07,0
+Timeless Days,E,2024-10-11,2024-10-18,0
+Abyssal Splendor,E,2024-12-02,2024-12-16,0
+Fondness Treasure,E,2024-12-31,2025-01-20,0
+Touring In Love,E,2024-12-31,2025-01-20,0
+Festive Blessing,E,2025-01-22,2025-02-07,0
+Until Twilight,E,2025-03-01,2025-03-08,0
+Gravity Calls,E,2025-03-28,2025-04-11,0
+Night Whisper,E,2025-04-13,2025-04-20,0
+Summer Daydream,E,2025-06-08,2025-06-15,0
+Merling Oath,E,2025-06-17,2025-07-01,0
+Cycle Unbound,E,2025-07-25,2025-08-08,0
+Sunset Finale,E,2025-08-31,2025-09-06,0
+Golden Verdict,E,2025-09-25,2025-10-09,0
+Promise 1,E,2025-08-12,2025-08-31,1
+Promise 2,E,2025-08-12,2025-08-31,1
+Promise 3,E,2025-08-12,2025-08-31,1
+Heartbeat Ripples,E,2025-05-11,2025-05-18,1

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Resource Tracking</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Event Runs: </h1>
+    <table>
+        <tr>
+            <th>Event Name</th>
+            <th>Event Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Run Number</th>
+            <th>Rerun</th>
+        </tr>
+        <tr th:each="eventRun : ${activityRunPeriods}" th:with="event = ${eventRun.event}">
+            <td th:text="${event.name}"></td>
+            <td th:text="${event.eventType}"></td>
+            <td th:text="${eventRun.startDate}"></td>
+            <td th:text="${eventRun.endDate}"></td>
+            <td th:text="${eventRun.runNum}"></td>
+            <td th:text="${eventRun.rerun}"></td>
+        </tr>
+    </table>
+
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addTableSort();
+    });
+
+</script>
+</body>
+</html>

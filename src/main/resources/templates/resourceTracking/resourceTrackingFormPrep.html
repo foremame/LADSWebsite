@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Resource Tracking</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form name="rtPrep" action="/resourceTracking/addPrep" method="post">
+        <div id="selectPreviousDayDiv">
+            <p>Load information from previous entry?</p>
+            <label for="selectPreviousDayYes">Yes</label>
+            <input type="radio" id="selectPreviousDayYes" name="selectPreviousDay" value="true" required>
+            <label for="selectPreviousDayNo">No</label>
+            <input type="radio" id="selectPreviousDayNo" name="selectPreviousDay" value="false" required>
+        </div>
+        <button id="btnSubmit" class="submit" type="submit" style="display:none">Next</button>
+    </form>
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+    $("input[name='selectPreviousDay']").change( function() {
+        $('#btnSubmit').show();
+    });
+
+</script>
+</body>
+</html>

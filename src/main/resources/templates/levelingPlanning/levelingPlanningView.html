@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Banner</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+<body>
+<div class="container">
+    <p>Cost Per Card:</p>
+    <table>
+        <tr>
+            <th>Card #</th>
+            <th>Stellacrum Color</th>
+            <th>Exp</th>
+            <th>Gold</th>
+            <th>Crystal N</th>
+            <th>Crystal R</th>
+            <th>Crystal SR</th>
+        </tr>
+        <tr th:each="cardLevelingCost,iterStat : ${cardLevelingCosts}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${cardLevelingCost.stellacrum}"></td>
+            <td th:text="${cardLevelingCost.expCost}"></td>
+            <td th:text="${cardLevelingCost.goldCost}"></td>
+            <td th:text="${cardLevelingCost.nCost}"></td>
+            <td th:text="${cardLevelingCost.rCost}"></td>
+            <td th:text="${cardLevelingCost.srCost}"></td>
+        </tr>
+    </table>
+    <p>Total Cost For All Cards:</p>
+    <table>
+        <tr>
+            <th>Exp</th>
+            <th>Gold</th>
+            <th:block th:each="totalCrystalCost : ${totalCrystalCosts}">
+                <th th:text="${totalCrystalCost.key} + ' N'"></th>
+                <th th:text="${totalCrystalCost.key} + ' R'"></th>
+                <th th:text="${totalCrystalCost.key} + ' SR'"></th>
+            </th:block>
+        </tr>
+        <tr>
+            <td th:text="${totalExpCost}"></td>
+            <td th:text="${totalGoldCost}"></td>
+            <th:block th:each="totalCrystalCost : ${totalCrystalCosts}" th:with="crystalValue=${totalCrystalCost.value}">
+                <td th:text="${crystalValue['N']}"></td>
+                <td th:text="${crystalValue['R']}"></td>
+                <td th:text="${crystalValue['SR']}"></td>
+            </th:block>
+        </tr>
+    </table>
+    <p>Current Resources:</p>
+    <table>
+        <tr>
+            <th>Exp</th>
+            <th>Gold</th>
+            <th:block th:each="currentCrystal : ${currentCrystals}">
+                <th th:text="${currentCrystal.key} + ' N'"></th>
+                <th th:text="${currentCrystal.key} + ' R'"></th>
+                <th th:text="${currentCrystal.key} + ' SR'"></th>
+            </th:block>
+            <th>Ascension Box N</th>
+            <th>Ascension Box R</th>
+            <th>Ascension Box SR</th>
+            <th>Ascension Box General</th>
+        </tr>
+        <tr>
+            <td th:text="${currentExp}"></td>
+            <td th:text="${currentGold}"></td>
+            <th:block th:each="currentCrystal : ${currentCrystals}" th:with="crystalValue=${currentCrystal.value}">
+                <td th:text="${crystalValue['N']}"></td>
+                <td th:text="${crystalValue['R']}"></td>
+                <td th:text="${crystalValue['SR']}"></td>
+            </th:block>
+            <th th:text="${ascensionBoxes['N']}"></th>
+            <th th:text="${ascensionBoxes['R']}"></th>
+            <th th:text="${ascensionBoxes['SR']}"></th>
+            <th th:text="${ascensionBoxes['General']}"></th>
+        </tr>
+    </table>
+    <p>Total Resources Needed:</p>
+    <table>
+        <tr>
+            <th>Exp</th>
+            <th>Gold</th>
+            <th:block th:each="neededCrystal : ${neededCrystals}">
+                <th th:text="${neededCrystal.key} + ' N'"></th>
+                <th th:text="${neededCrystal.key} + ' R'"></th>
+                <th th:text="${neededCrystal.key} + ' SR'"></th>
+            </th:block>
+        </tr>
+        <tr>
+            <td th:text="${neededExp}"></td>
+            <td th:text="${neededGold}"></td>
+            <th:block th:each="neededCrystal : ${neededCrystals}" th:with="crystalValue=${neededCrystal.value}">
+                <td th:text="${crystalValue['N']}"></td>
+                <td th:text="${crystalValue['R']}"></td>
+                <td th:text="${crystalValue['SR']}"></td>
+            </th:block>
+        </tr>
+    </table>
+    <p>Total Resources Needed After Ascension Boxes:</p>
+    <table>
+        <tr>
+            <th>Exp</th>
+            <th>Gold</th>
+            <th:block th:each="neededCrystal : ${neededCrystalsAfterBoxes}">
+                <th th:text="${neededCrystal.key} + ' N'"></th>
+                <th th:text="${neededCrystal.key} + ' R'"></th>
+                <th th:text="${neededCrystal.key} + ' SR'"></th>
+            </th:block>
+        </tr>
+        <tr>
+            <td th:text="${neededExp}"></td>
+            <td th:text="${neededGold}"></td>
+            <th:block th:each="neededCrystal : ${neededCrystalsAfterBoxes}" th:with="crystalValue=${neededCrystal.value}">
+                <td th:text="${crystalValue['N']}"></td>
+                <td th:text="${crystalValue['R']}"></td>
+                <td th:text="${crystalValue['SR']}"></td>
+            </th:block>
+        </tr>
+    </table>
+    <p>Stamina Cost Total:</p>
+    <table>
+        <tr>
+            <th>Exp Stamina Cost</th>
+            <th>Gold Stamina Cost</th>
+            <th th:each="crystalStam : ${crystalStamCosts}" th:text="${crystalStam.key} + ' Stamina Cost'"></th>
+            <th>Total Stamina Cost</th>
+        </tr>
+        <tr>
+            <td th:text="${expStamCost}"></td>
+            <td th:text="${goldStamCost}"></td>
+            <th th:each="crystalStamCost : ${crystalStamCosts}" th:text="${crystalStamCost.value}"></th>
+            <th th:text="${totalStamCost}"></th>
+        </tr>
+    </table>
+    <p>Stamina Cost Total (Using Ascension Boxes):</p>
+    <table>
+        <tr>
+            <th>Exp Stamina Cost</th>
+            <th>Gold Stamina Cost</th>
+            <th th:each="crystalStam : ${crystalStamCostAfterBoxes}" th:text="${crystalStam.key} + ' Stamina Cost'"></th>
+            <th>Total Stamina Cost</th>
+        </tr>
+        <tr>
+            <td th:text="${expStamCost}"></td>
+            <td th:text="${goldStamCost}"></td>
+            <th th:each="crystalStamCost : ${crystalStamCostAfterBoxes}" th:text="${crystalStamCost.value}"></th>
+            <th th:text="${totalStamCostAfterBoxes}"></th>
+        </tr>
+    </table>
+</div>
+<script th:inline="javascript" type="text/javascript">
+</script>
+</body>
+</html>

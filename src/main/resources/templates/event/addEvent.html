@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Banner</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+</head>
+<body>
+<div class="container">
+    <form name="eventForm" action="/event/add" method="post">
+        <div class="form-group">
+            <label for="name">Event Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter Event Name: " required>
+        </div>
+        <div class="form-group" id="mainTypeDiv">
+            <label for="mainType">Event Type: </label>
+            <select id="mainType" name="mainType">
+                <option value="">--Please Choose An Option--</option>
+                <option th:each="eventType : ${eventTypes}" th:id="${eventType}" th:value="${eventType}" th:text="${eventType}"></option>
+            </select>
+        </div>
+        <div class="form-group" id="loveInterestDiv">
+            <p>Select Love Interests:</p>
+            <div th:each="i : ${#numbers.sequence( 0, #lists.size(loveInterests)-1, 1)}">
+                <input  type="checkbox" th:id="${loveInterests[i]}" th:value="${loveInterests[i]}" th:name="${'activitySubForms[' + i + '].loveInterest'}">
+                <label th:for="${loveInterests[i]}" th:text="${loveInterests[i]}"></label><br>
+            </div>
+        </div>
+        <div class="form-group" id="startDiv">
+            <label for="startDate">Start Date (YYYY-MM-DD):</label>
+            <input type="text" name="startDate" id="startDate" placeholder="Enter start date" required>
+        </div>
+        <div class="form-group" id="endDiv">
+            <label for="endDate">End Date (YYYY-MM-DD):</label>
+            <input type="text" name="endDate" id="endDate" placeholder="Enter end date" required>
+        </div>
+        <button id="submit" class="submit" type="submit">Submit</button>
+    </form>
+</div>
+<script th:inline="javascript" type="text/javascript">
+    $("form").submit( function(e) {
+        e.preventDefault();
+        $("#errorDiv").hide();
+        $("#errorDiv").empty();
+
+        var form = this;
+        var issue = false;
+        var errorText = "";
+        if ($("#mainType").val() == "") {
+            issue = true;
+            errorText += "<p>Please select an event type</p>";
+        }
+        if ($("#loveInterestDiv").find('input').filter(':checked').length == 0) {
+            issue = true;
+            errorText += "<p>Please select at least one love interest</p>";
+        }
+        var params = {"eventName" : $("#name").val(), "startDate" : $("#startDate").val(), "endDate" : $("#endDate").val()};
+        validateByUrl("/event/validateEventForm", params, issue, errorText, form);
+    });
+</script>
+</body>
+</html>

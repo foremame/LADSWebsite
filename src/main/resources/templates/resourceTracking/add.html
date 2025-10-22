@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Resource Tracking</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form name="rtPrep" action="/resourceTracking/add" method="post">
+        <div class="form-group" id="diamondDiv">
+            <label for="diamonds">Diamonds:</label>
+            <input type="number" id="diamonds" name="diamonds" th:value="${lastRT} ? ${lastRT.diamonds} : 0">
+        </div>
+        <div class="form-group" id="purpleDiamondDiv">
+            <label for="purpleDiamonds">Purple Diamonds:</label>
+            <input type="number" id="purpleDiamonds" name="purpleDiamonds" th:value="${lastRT} ? ${lastRT.purpleDiamonds} : 0">
+        </div>
+        <div class="form-group" id="deepspaceWishDiv">
+            <label for="deepspaceWish">Deepspace Wishes:</label>
+            <input type="number" id="deepspaceWish" name="deepspaceWish" th:value="${lastRT} ? ${lastRT.deepspaceWish} : 0">
+        </div>
+        <div class="form-group" id="empyreanWishDiv">
+            <label for="empyreanWish">Empyrean Wishes:</label>
+            <input type="number" id="empyreanWish" name="empyreanWish" th:value="${lastRT} ? ${lastRT.empyreanWish} : 0">
+        </div>
+        <div class="form-group" id="goldDiv">
+            <label for="gold">Gold:</label>
+            <input type="number" id="gold" name="gold" th:value="${lastRT} ? ${lastRT.gold} : 0">
+        </div>
+        <div class="form-group" id="awakeningHeartSrDiv">
+            <label for="awakeningHeartSr">Awakening Heart SR:</label>
+            <input type="number" id="awakeningHeartSr" name="awakeningHeartSr" th:value="${lastRT} ? ${lastRT.awakeningHeartSr} : 0">
+        </div>
+        <div class="form-group" id="awakeningHeartSsrDiv">
+            <label for="awakeningHeartSsr">Awakening Heart SSR:</label>
+            <input type="number" id="awakeningHeartSsr" name="awakeningHeartSsr" th:value="${lastRT} ? ${lastRT.awakeningHeartSsr} : 0">
+        </div>
+        <div th:each="i : ${#numbers.sequence( 0, #lists.size(resourceTypes)-1, 1)}" th:with="resourceType=${resourceTypes[i]}" th:id="${resourceType + 'Div'}">
+            <p th:text="${resourceType}"></p>
+            <input type="hidden" th:name="${'rtValuesForms[' + i + '].resourceTypeName'}" th:value="${resourceType}">
+            <div class="form-group" th:if="${resourceType == 'Ascension Crystal Box'}" th:id="${resourceType + 'GeneralDiv'}">
+                <label th:for="${resourceType + 'GeneralId'}" th:text="${resourceType + ' General:'}"></label>
+                <input type="number" th:id="${resourceType + 'GeneralId'}" th:name="${'rtValuesForms[' + i + '].general'}" th:value="${lastRT} ? ${lastRTVals.get(resourceType).general} : 0">
+            </div>
+            <div class="form-group" th:id="${resourceType + 'NDiv'}">
+                <label th:for="${resourceType + 'NId'}" th:text="${resourceType + ' N:'}"></label>
+                <input type="number" th:id="${resourceType + 'NId'}" th:name="${'rtValuesForms[' + i + '].n'}" th:value="${lastRT} ? ${lastRTVals.get(resourceType).n} : 0">
+            </div>
+            <div class="form-group" th:id="${resourceType + 'RDiv'}">
+                <label th:for="${resourceType + 'RId'}" th:text="${resourceType + ' R:'}"></label>
+                <input type="number" th:id="${resourceType + 'RId'}" th:name="${'rtValuesForms[' + i + '].r'}" th:value="${lastRT} ? ${lastRTVals.get(resourceType).r} : 0">
+            </div>
+            <div class="form-group" th:id="${resourceType + 'SRDiv'}">
+                <label th:for="${resourceType + 'SRId'}" th:text="${resourceType + ' SR:'}"></label>
+                <input type="number" th:id="${resourceType + 'SRId'}" th:name="${'rtValuesForms[' + i + '].sr'}" th:value="${lastRT} ? ${lastRTVals.get(resourceType).sr} : 0">
+            </div>
+            <div class="form-group" th:if="${resourceType == 'Wish Bottle' || resourceType == 'Core Energy'}" th:id="${resourceType + 'SSRDiv'}">
+                <label th:for="${resourceType + 'SSRId'}" th:text="${resourceType + ' SSR:'}"></label>
+                <input type="number" th:id="${resourceType + 'SSRId'}" th:name="${'rtValuesForms[' + i + '].ssr'}" th:value="${lastRT} ? ${lastRTVals.get(resourceType).ssr} : 0">
+            </div>
+        </div>
+        <button id="submit" class="submit" type="submit">Submit</button>
+    </form>
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Player Card</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div id="errorDiv" style="display:none">
+    </div>
+    <form name="playerCardForm" action="/playerCard/add" method="post">
+        <div class="form-group" id="cardListDiv">
+            <label for="cardNameSearch">Card Name:</label>
+            <input type="text" id="cardNameSearch" onkeyup="searchForName('cardNameSearch','cardsUL')" placeholder="Search for card name..">
+            <ul id="cardsUL">
+                <li th:each="card: ${cards}" style="display:none">
+                    <input type="radio" th:id="${card.id}" name="cardId" th:value="${card.id}">
+                    <label th:for="${card.id}" th:text="${card.name}"></label>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group" id="rankTypeDiv" style="display:none">
+            <label for="rankType">Card Rank:</label>
+            <select id="rankType" name="rankType">
+                <option value="">--Please Choose An Option--</option>
+                <option th:each="rankType : ${rankTypes}" th:value="${rankType}" th:text="${rankType}"></option>
+            </select>
+        </div>
+        <div class="form-group" id="cardLevelDiv" style="display:none">
+            <label for="cardLevel">Level:</label>
+            <input type="number" id="cardLevel" name="level" onkeyup="showAwakenedDiv()" required>
+        </div>
+        <div class="form-group" id="awakenedDiv" style="display:none">
+            <input type="checkbox" id="awakened" name="awakened">
+            <label for="awakened"> Card Is Awakened</label>
+        </div>
+        <button style="display:none" id="btnSubmit" class="submit" type="submit">Submit</button>
+    </form>
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+    $("form").submit(function(e) {
+        e.preventDefault();
+        $("#errorDiv").hide();
+        $("#errorDiv").empty();
+
+        var form = this;
+        var issue = false;
+        var errorText = "";
+
+        if ($("#cardLevel").val() < 1 || $("#cardLevel").val() > 80) {
+            issue = true;
+            errorText += "<p>Invalid card level, please choose a level between 1 - 80.</p>";
+        }
+        if($("#rankType").val() == "") {
+            issue = true;
+            errorText += "<p>Please select a card rank.</p>";
+        }
+
+        params = {"cardId": $("input[name='cardId']:checked").val()};
+        validateByUrl("/playerCard/validatePlayerCard", params, issue, errorText, form);
+    });
+
+    $("input[name='cardId']").change( function() {
+        $("#rankTypeDiv").show();
+        $("#cardLevelDiv").show();
+        $("#btnSubmit").show();
+    });
+
+    function showAwakenedDiv() {
+        if ($("#cardLevel").val() == 80) {
+            $("#awakenedDiv").show();
+        } else {
+            $("#awakenedDiv").hide();
+        }
+    }
+</script>
+</body>
+</html>

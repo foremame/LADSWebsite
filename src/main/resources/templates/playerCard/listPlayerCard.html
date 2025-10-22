@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Resource Tracking</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Owned Cards: </h1>
+    <table>
+        <tr>
+            <th>Love Interest</th>
+            <th>Card Name</th>
+            <th>Card Rarity</th>
+            <th>Card Type</th>
+            <th>Stellacrum</th>
+            <th>Main Stat</th>
+            <th>Card Rank</th>
+            <th>Level</th>
+            <th>Awakened</th>
+            <th>Banner/Event Origin Name</th>
+            <th>Update Card Info</th>
+        </tr>
+        <tr th:each="playerCard : ${playerCards}" th:with="card = ${playerCard.card}">
+            <td th:text="${card.loveInterestType}"></td>
+            <td th:text="${card.name}"></td>
+            <td th:text="${card.rarityType}"></td>
+            <td th:text="${card.cardType}"></td>
+            <td th:text="${card.stellacrumType}"></td>
+            <td th:text="${card.mainStatType}"></td>
+            <td th:text="${playerCard.rankType}"></td>
+            <td th:text="${playerCard.level}"></td>
+            <td th:text="${playerCard.awakened}"></td>
+            <td th:text="${card.cardOrigin.banner} ? ${card.cardOrigin.banner.name} : ${card.cardOrigin.event.name}"></td>
+            <td th:text="placeholder"></td>
+        </tr>
+    </table>
+
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addTableSort();
+    });
+
+</script>
+</body>
+</html>

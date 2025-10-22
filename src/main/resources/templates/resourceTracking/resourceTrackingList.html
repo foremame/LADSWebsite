@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Resource Tracking</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Tracked Resources: </h1>
+    <table>
+        <tr>
+            <th>Add Date</th>
+            <th>Purple Diamonds</th>
+            <th>Diamonds</th>
+            <th>Deepspace Wishes</th>
+            <th>Total Wishes</th>
+            <th>Wishes Gained</th>
+            <th>Total Wishes Gained</th>
+            <th>Average Wishes Gained Per Day</th>
+            <th>Empyrean Wishes</th>
+            <th>Gold</th>
+            <th>Awakening Hearts SR</th>
+            <th>Awakening Hearts SSR</th>
+        </tr>
+        <tr th:each="resource : ${resources}">
+            <td th:text="${#temporals.format(resource.resourceTracking.addDate, 'MM-dd-yyyy HH:mm')}"></td>
+            <td th:text="${resource.resourceTracking.purpleDiamonds}"></td>
+            <td th:text="${resource.resourceTracking.diamonds}"></td>
+            <td th:text="${resource.resourceTracking.deepspaceWish}"></td>
+            <td th:text="${resource.totalWishes}"></td>
+            <td th:text="${resource.wishesGainedSinceLastEntry}"></td>
+            <td th:text="${resource.wishesGainedOverTime}"></td>
+            <td th:text="${resource.averageWishesGainedPerDay}"></td>
+            <td th:text="${resource.resourceTracking.empyreanWish}"></td>
+            <td th:text="${resource.resourceTracking.gold}"></td>
+            <td th:text="${resource.resourceTracking.awakeningHeartSr}"></td>
+            <td th:text="${resource.resourceTracking.awakeningHeartSsr}"></td>
+        </tr>
+    </table>
+</div>
+<script th:inline="javascript" type="text/javascript">
+
+    document.addEventListener('DOMContentLoaded', function() {
+        addTableSort();
+    });
+
+</script>
+</body>
+</html>
