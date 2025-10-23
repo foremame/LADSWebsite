@@ -37,11 +37,6 @@
             <label for="awakeningHeartSsr">Awakening Heart SSR:</label>
             <input type="number" id="awakeningHeartSsr" name="awakeningHeartSsr" th:value="${lastRT} ? ${lastRT.awakeningHeartSsr} : 0">
         </div>
-        <div class="form-group" id="typeCheckboxes">
-            <th:block th:each="resourceType : ${resourceTypes}">
-
-            </th:block>
-        </div>
         <div th:each="resourceType,iterStat : ${resourceTypes}" th:with="noSpaces = ${#strings.replace(resourceType,' ','')}" th:id="${noSpaces + 'Div'}">
             <label th:for="${noSpaces + 'Checkbox'}" th:text="${'Show ' + resourceType + ': '}"></label>
             <input type="checkbox" th:id="${noSpaces + 'Checkbox'}" th:attr="onchange=|showResourceType(this.checked,'${noSpaces}')|"><br>

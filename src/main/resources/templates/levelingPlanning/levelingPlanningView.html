@@ -130,14 +130,18 @@
         <tr>
             <th>Exp Stamina Cost</th>
             <th>Gold Stamina Cost</th>
-            <th th:each="crystalStam : ${crystalStamCosts}" th:text="${crystalStam.key} + ' Stamina Cost'"></th>
+            <th th:if="${crystalStamCosts['Lemonette']}">Lemonette Stamina Cost</th>
+            <th th:if="${crystalStamCosts['Snoozer']}">Snoozer Stamina Cost</th>
+            <th th:if="${crystalStamCosts['Pumpkin Magus']}">Pumpkin Magus Stamina Cost</th>
             <th>Total Stamina Cost</th>
         </tr>
         <tr>
-            <td th:text="${expStamCost}"></td>
-            <td th:text="${goldStamCost}"></td>
-            <th th:each="crystalStamCost : ${crystalStamCosts}" th:text="${crystalStamCost.value}"></th>
-            <th th:text="${totalStamCost}"></th>
+            <td th:text="${crystalStamCosts['Exp']}"></td>
+            <td th:text="${crystalStamCosts['Gold']}"></td>
+            <td th:if="${crystalStamCosts['Lemonette']}" th:text="${crystalStamCosts['Lemonette']}"></td>
+            <td th:if="${crystalStamCosts['Snoozer']}" th:text="${crystalStamCosts['Snoozer']}"></td>
+            <td th:if="${crystalStamCosts['Pumpkin Magus']}" th:text="${crystalStamCosts['Pumpkin Magus']}"></td>
+            <td th:text="${crystalStamCosts['Total']}"></td>
         </tr>
     </table>
     <p>Stamina Cost Total (Using Ascension Boxes):</p>
@@ -145,14 +149,18 @@
         <tr>
             <th>Exp Stamina Cost</th>
             <th>Gold Stamina Cost</th>
-            <th th:each="crystalStam : ${crystalStamCostAfterBoxes}" th:text="${crystalStam.key} + ' Stamina Cost'"></th>
+            <th th:if="${crystalStamCostAfterBoxes['Lemonette']}">Lemonette Stamina Cost</th>
+            <th th:if="${crystalStamCostAfterBoxes['Snoozer']}">Snoozer Stamina Cost</th>
+            <th th:if="${crystalStamCostAfterBoxes['Pumpkin Magus']}">Pumpkin Magus Stamina Cost</th>
             <th>Total Stamina Cost</th>
         </tr>
         <tr>
-            <td th:text="${expStamCost}"></td>
-            <td th:text="${goldStamCost}"></td>
-            <th th:each="crystalStamCost : ${crystalStamCostAfterBoxes}" th:text="${crystalStamCost.value}"></th>
-            <th th:text="${totalStamCostAfterBoxes}"></th>
+            <td th:text="${crystalStamCostAfterBoxes['Exp']}"></td>
+            <td th:text="${crystalStamCostAfterBoxes['Gold']}"></td>
+            <td th:if="${crystalStamCostAfterBoxes['Lemonette']}" th:text="${crystalStamCostAfterBoxes['Lemonette']}"></td>
+            <td th:if="${crystalStamCostAfterBoxes['Snoozer']}" th:text="${crystalStamCostAfterBoxes['Snoozer']}"></td>
+            <td th:if="${crystalStamCostAfterBoxes['Pumpkin Magus']}" th:text="${crystalStamCostAfterBoxes['Pumpkin Magus']}"></td>
+            <td th:text="${crystalStamCostAfterBoxes['Total']}"></td>
         </tr>
     </table>
 </div>
