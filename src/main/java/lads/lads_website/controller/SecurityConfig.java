@@ -53,6 +53,8 @@ public class SecurityConfig {
                             "/playerCard/add", "/playerCard/addPlayerCard", "/playerCard/update", "/playerCard/updatePlayerCard", "/playerCard/getPlayerCardInfoById",
                             "/playerCard/list", "/playerCard/listPlayerCard", "/playerCard/getPlayerCardInfoByCardId",
                             "/playerCard/validatePlayerCard",
+                            // Player Bounty Controller
+                            "/playerBounty/update", "/playerBounty/changeBountyLevel",
                             // Resource Tracking Controller
                             "/resourceTracking/add", "/resourceTracking/addPrep", "/resourceTracking/resourceTrackingFormPrep",
                             "/resourceTracking/list", "/resourceTracking/resourceTrackingList",

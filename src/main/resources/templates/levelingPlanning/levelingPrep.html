@@ -24,13 +24,11 @@
     const selectedCards = new Map();
 
     function changeCardForm() {
-        var placeholder = $("#numCards").val();
         const numCards = Number($("#numCards").val());
         var i,j;
-        if (numCards >= 0 && placeholder != "") {
+        if (numCards >= 0 && $("#numCards").val() != "") {
             // If user decides they want to level less cards, remove the cards by hiding them.
             if (numCards < numCardPrev) {
-                // Not sure why but the below for loop isn't hiding the first card properly when numCards = 0
                 if (numCards == 0) {
                     hideOldCardDiv(numCards);
                 }

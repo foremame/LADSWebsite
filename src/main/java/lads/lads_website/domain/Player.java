@@ -31,10 +31,13 @@ public class Player {
     @OneToMany(mappedBy = "player", fetch = FetchType.LAZY)
     private List<ResourceTracking> resourceTrackings = new ArrayList<>();
 
+    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY)
+    private List<PlayerBounty> playerBounties = new ArrayList<>();
+
     public Player() {
     }
 
-    public Player(Long id, String username, String email, String password, String permissionLevel, LocalDate addDate, List<PlayerCard> playerCards, List<ResourceTracking> resourceTrackings) {
+    public Player(Long id, String username, String email, String password, String permissionLevel, LocalDate addDate, List<PlayerCard> playerCards, List<ResourceTracking> resourceTrackings, List<PlayerBounty> playerBounties) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -43,6 +46,7 @@ public class Player {
         this.addDate = addDate;
         this.playerCards = playerCards;
         this.resourceTrackings = resourceTrackings;
+        this.playerBounties = playerBounties;
     }
 
     public Long getId() {
@@ -107,5 +111,13 @@ public class Player {
 
     public void setResourceTrackings(List<ResourceTracking> resourceTrackings) {
         this.resourceTrackings = resourceTrackings;
+    }
+
+    public List<PlayerBounty> getPlayerBounties() {
+        return playerBounties;
+    }
+
+    public void setPlayerBounties(List<PlayerBounty> playerBounties) {
+        this.playerBounties = playerBounties;
     }
 }
