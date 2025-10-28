@@ -45,11 +45,9 @@ public class BannerController {
     public String addNewBanner(ActivityForm bannerForm) {
         Banner banner = new Banner();
         banner.setName(bannerForm.getName());
-        Optional<BannerCategory> bc = bannerCategoryService.getBannerCategoryByMainTypeAndSubType(bannerForm.getMainType(), bannerForm.getSubType());
-        if (bc.isEmpty()) {
-            throw new RuntimeException("Banner Category not found");
-        }
-        banner.setBannerCategory(bc.get());
+        BannerCategory bc = bannerCategoryService.getBannerCategoryByMainTypeAndSubType(bannerForm.getMainType(), bannerForm.getSubType()).orElseThrow(()-> new RuntimeException("Banner Category not found"));
+        banner.setBannerCategory(bc);
+        if (bannerForm.getActivitySubForms() == null) { throw new RuntimeException("No love interests selected for banner."); }
         banner = bannerService.addNewBanner(banner);
         ActivityRunPeriod arp = new ActivityRunPeriod();
         arp.setBanner(banner);

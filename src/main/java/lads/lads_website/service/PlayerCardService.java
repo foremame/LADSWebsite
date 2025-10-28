@@ -1,5 +1,7 @@
 package lads.lads_website.service;
 
+import lads.lads_website.domain.Card;
+import lads.lads_website.domain.Player;
 import lads.lads_website.domain.PlayerCard;
 import lads.lads_website.repository.PlayerCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +38,15 @@ public class PlayerCardService {
 
     public void updatePlayerCard(PlayerCard playerCard) {
         playerCardRepository.save(playerCard);
+    }
+
+    public PlayerCard createNewPlayerCard(Player player, Card card) {
+        PlayerCard playerCard = new PlayerCard();
+        playerCard.setCard(card);
+        playerCard.setPlayer(player);
+        playerCard.setAwakened(false);
+        playerCard.setLevel(1);
+        playerCard.setRankType("R0");
+        return addNewPlayerCard(playerCard);
     }
 }
