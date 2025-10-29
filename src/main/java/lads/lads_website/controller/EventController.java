@@ -5,7 +5,6 @@ import lads.lads_website.domain.ActivityRunPeriod;
 import lads.lads_website.domain.Event;
 import lads.lads_website.forms.ActivityForm;
 import lads.lads_website.forms.subforms.ActivitySubForm;
-import lads.lads_website.forms.EventForm;
 import lads.lads_website.service.ActivityLoveInterestService;
 import lads.lads_website.service.ActivityRunPeriodService;
 import lads.lads_website.service.EventService;
@@ -44,6 +43,7 @@ public class EventController {
         Event event = new Event();
         event.setEventType(eventForm.getMainType());
         event.setName(eventForm.getName());
+        if (eventForm.getActivitySubForms() == null) { throw new RuntimeException("No love interest selected"); }
 
         event = eventService.addNewEvent(event);
 

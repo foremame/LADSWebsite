@@ -125,7 +125,7 @@
         var issue = false
         var errorText = "";
 
-        if ($("#10Pull").val()) {
+        if ($("input[name='multipleCardPulls']:checked").val() == "true") {
             for (var i = 0; i < 10; i++) {
                 var checkedVal = $("input[name='cardPulls\\[" + i + "\\].cardId']:checked").val();
                 if (!checkedVal) {

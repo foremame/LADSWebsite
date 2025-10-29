@@ -29,7 +29,8 @@ public class ActivityRunPeriodService {
     }
 
     public Optional<ActivityRunPeriod> getActivityRunPeriodByBannerIdAndTimestamp(Long bannerId, LocalDateTime pullTimestamp) {
-        return activityRunPeriodRepository.findByBannerIdAndPullTimestamp(bannerId, pullTimestamp);
+        LocalDate pullDate = pullTimestamp.toLocalDate();
+        return activityRunPeriodRepository.findByBannerIdAndPullTimestamp(bannerId, pullDate);
     }
 
     public void addNewActivityRunPeriod(ActivityRunPeriod activityRunPeriod) {

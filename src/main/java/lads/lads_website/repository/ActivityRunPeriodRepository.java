@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +13,7 @@ import java.util.Optional;
 public interface ActivityRunPeriodRepository extends JpaRepository<ActivityRunPeriod, Long> {
 
     @Query("select a from ActivityRunPeriod a where a.banner.id = ?1 and a.startDate <= ?2 and a.endDate >= ?2")
-    Optional<ActivityRunPeriod> findByBannerIdAndPullTimestamp(Long bannerId, LocalDateTime pullTimestamp);
+    Optional<ActivityRunPeriod> findByBannerIdAndPullTimestamp(Long bannerId, LocalDate pullTimestamp);
 
     @Query("SELECT a from ActivityRunPeriod a WHERE ((a.banner is not null AND a.banner.id = ?1) OR (a.event is not NULL AND a.event.id = ?1)) AND a.activityRunType = ?2 ORDER BY a.runNum DESC FETCH FIRST 1 ROWS ONLY")
     Optional<ActivityRunPeriod> findFirstByBannerIdOrEventIdAndActivityRunTypeOrderByRunNumDesc(Long id, String activityRunType);

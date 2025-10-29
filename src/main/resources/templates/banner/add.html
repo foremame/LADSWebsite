@@ -91,7 +91,7 @@
                 if (subTypeValue == "Multi") {
                     $('#loveInterestDiv').append('<p>Select Love Interests:</p>');
                     for (var i = 0; i < loveInterests.length; i++) {
-                        $("#loveInterestDiv").append('<input type="checkbox" id="' + loveInterests[i] + '" name="activitySubForms\\[' + i + '\\].loveInterest" value=" + loveInterests[i] + " checked>');
+                        $("#loveInterestDiv").append('<input type="checkbox" id="' + loveInterests[i] + '" name="activitySubForms[' + i + '].loveInterest" value="' + loveInterests[i] + '" checked>');
                         $("#loveInterestDiv").append('<label for="' + loveInterests[i] + '"> ' + loveInterests[i] + '</label><br>');
                     }
                     $("#loveInterestDiv").append('<br>');
