@@ -97,8 +97,8 @@ public class CardPullController {
 
         RedirectView rv = new RedirectView("/cardPull/add");
         redirectAttributes.addFlashAttribute("bannerId", cardPullForm.getBannerId());
-        redirectAttributes.addFlashAttribute("date", new SimpleDateFormat("yyyy-MM-dd").format(pullTimestamp));
-        redirectAttributes.addFlashAttribute("time", new SimpleDateFormat("HH:mm:ss").format(pullTimestamp.toLocalTime()));
+        redirectAttributes.addFlashAttribute("date", pullTimestamp.toLocalDate().toString());
+        redirectAttributes.addFlashAttribute("time", pullTimestamp.toLocalTime().toString());
         redirectAttributes.addFlashAttribute("numCards", length);
         rv.setExposeModelAttributes(false);
 
@@ -150,7 +150,9 @@ public class CardPullController {
 
     private LocalDateTime getPullTimestamp(String timestamp) {
         try {
-            return LocalDateTime.parse(timestamp);
+            String cleanSpaces = timestamp.replace(" ", "T");
+            LocalDateTime value = LocalDateTime.parse(cleanSpaces);
+            return value;
         } catch (DateTimeParseException e) {
             throw new RuntimeException("Could not process timestamp value from string: " + timestamp);
         }

@@ -146,7 +146,7 @@ public class PlayerCardController {
     public List<String> validatePlayerCard(Long cardId, Principal principal) {
         List<String> validationResults = new ArrayList<>();
         Long playerCardId = getPlayerCardInfoByCardId(cardId, principal);
-        if (playerCardId == -1) {
+        if (playerCardId != -1) {
             validationResults.add("You already own this card. To update owned card info, use the relevant update form instead.");
         }
 
