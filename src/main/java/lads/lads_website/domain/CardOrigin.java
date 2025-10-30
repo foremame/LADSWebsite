@@ -28,6 +28,14 @@ public class CardOrigin {
     public CardOrigin() {
     }
 
+    public CardOrigin(Banner banner) {
+        this.banner = banner;
+    }
+
+    public CardOrigin(Event event) {
+        this.event = event;
+    }
+
     public CardOrigin(Long id, Banner banner, Event event, List<Card> cards) {
         this.id = id;
         this.banner = banner;

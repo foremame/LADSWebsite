@@ -38,11 +38,9 @@ public class LevelingPlanningController {
 
     @GetMapping("/levelingPlanning/startPrep")
     public String getLevelingPrepPage(Model model, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("Cannot load player information."));
         List<PlayerCard> playerCards = playerCardService.getAllPlayerCardsForGivenPlayerId(player.getId());
         List<PlayerCardList> playerCardLists = new ArrayList<>();
-        // Passing the full PlayerCard object violates the nesting depth requirements when used in Javascript, so need to only send necessary
-        // information to the page.
         playerCards.forEach(pc -> playerCardLists.add(new PlayerCardList(pc.getId(), pc.getCard().getName())));
 
         model.addAttribute("playerCards", playerCardLists);
@@ -54,7 +52,7 @@ public class LevelingPlanningController {
 
     @PostMapping("/levelingPlanning/levelingPlanning")
     public String getCardLevelingPage(LevelingPlanningForm levelingPlanningForm, Principal principal, Model model) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("Cannot load player information."));
         List<BountyReward> playerBounties = playerBountyService.getAllBountyRewardsForPlayer(player.getId());
 
         Optional<ResourceTracking> resourceTrackingOptional = resourceTrackingService.getMostRecentResourceTracking(player.getId());
@@ -70,7 +68,7 @@ public class LevelingPlanningController {
 
         ResourceTrackingValues ascensionBoxes = currentPlayerResources.getResourceTrackingValues().stream()
                 .filter(predicate -> predicate.getResourceType().equals("ascension crystal box"))
-                .findFirst().get();
+                .findFirst().orElse(new ResourceTrackingValues(null,"ascension crystal box", 0,0,0,0,0,currentPlayerResources));
         CardLevelingCost neededResourcesAfterBoxes = neededResources.useAscensionBoxes(ascensionBoxes, playerBounties);
         StaminaCost staminaCostAfterBoxes = neededResourcesAfterBoxes.getStaminaCost(playerBounties);
 

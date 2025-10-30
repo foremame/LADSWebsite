@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class HighestStaminaCostCrystals {
-    private final int CRYSTAL_N_PER_GENERAL_BOX = 5;
-    private final int CRYSTAL_R_PER_GENERAL_BOX = 2;
-    private final int CRYSTAL_SR_PER_GENERAL_BOX = 1;
     private final int CANNOT_FARM_CRYSTAL = -1;
     private int highestStaminaCost;
     private int secondHighestStaminaCost;
@@ -56,6 +53,9 @@ public class HighestStaminaCostCrystals {
         for (Map.Entry<String, Integer> highestCrystals : highestCrystalCosts.entrySet()) {
             String[] crystalType = highestCrystals.getKey().split("_");
             BountyReward bountyReward = CardLevelingCost.getBountyByStellacrum(playerBounties, crystalType[0]);
+            final int CRYSTAL_N_PER_GENERAL_BOX = 5;
+            final int CRYSTAL_R_PER_GENERAL_BOX = 2;
+            final int CRYSTAL_SR_PER_GENERAL_BOX = 1;
             Integer[] crystalsPerRun = crystalType[1].equals("N") ? new Integer[]{bountyReward.getN(), CRYSTAL_N_PER_GENERAL_BOX} : crystalType[1].equals("R") ? new Integer[]{bountyReward.getR(), CRYSTAL_R_PER_GENERAL_BOX} : new Integer[]{bountyReward.getSr(), CRYSTAL_SR_PER_GENERAL_BOX};
             int boxes = allCrystalsNeeded ? highestCrystals.getValue() : (staminaCost / bountyReward.getStaminaCost()) * crystalsPerRun[0];
             if (boxName.equals("General")) {

@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class ActivityLoveInterestController {
 
-    private ActivityLoveInterestService activityLoveInterestService;
+    private final ActivityLoveInterestService activityLoveInterestService;
 
     @Autowired
     public ActivityLoveInterestController(ActivityLoveInterestService activityLoveInterestService) {

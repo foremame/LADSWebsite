@@ -19,11 +19,11 @@ import java.util.*;
 @Controller
 public class ActivityRunPeriodController {
 
-    private ActivityRunPeriodService activityRunPeriodService;
-    private EventService eventService;
-    private BannerService bannerService;
-    private PlayerService playerService;
-    private CardPullService cardPullService;
+    private final ActivityRunPeriodService activityRunPeriodService;
+    private final EventService eventService;
+    private final BannerService bannerService;
+    private final PlayerService playerService;
+    private final CardPullService cardPullService;
 
     @Autowired
     public ActivityRunPeriodController(ActivityRunPeriodService activityRunPeriodService, EventService eventService, BannerService bannerService, PlayerService playerService, CardPullService cardPullService) {
@@ -52,12 +52,12 @@ public class ActivityRunPeriodController {
         activityRunPeriod.setEndDate(endDate);
         Optional<ActivityRunPeriod> activityRunPeriodOptional;
         if (activityForm.getActivityType().equals("Event")) {
-            Event event = eventService.getEventById(activityForm.getEventId()).get();
+            Event event = eventService.getEventById(activityForm.getEventId()).orElseThrow(()->new RuntimeException("No event found."));
             activityRunPeriod.setEvent(event);
             activityRunPeriodOptional = activityRunPeriodService.getMostRecentActivityRunPeriodForActivity("Event", activityForm.getEventId());
         }
         else {
-            Banner banner = bannerService.getBannerById(activityForm.getBannerId()).get();
+            Banner banner = bannerService.getBannerById(activityForm.getBannerId()).orElseThrow(()->new RuntimeException("No banner found"));
             activityRunPeriod.setBanner(banner);
             activityRunPeriodOptional = activityRunPeriodService.getMostRecentActivityRunPeriodForActivity("Banner", activityForm.getBannerId());
         }
@@ -73,7 +73,7 @@ public class ActivityRunPeriodController {
 
     @GetMapping("/activityRunPeriod/listBanners")
     public String getActivityRunPeriodBannerList(Model model, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
         List<ActivityRunPeriod> activityRunPeriods = activityRunPeriodService.getAllBannerRuns();
         Map<Long, Integer> cardPullsByActivityRunPeriodId = new HashMap<>();
 

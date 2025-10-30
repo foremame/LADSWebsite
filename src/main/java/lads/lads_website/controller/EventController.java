@@ -20,9 +20,9 @@ import java.util.*;
 @Controller
 public class EventController {
 
-    private EventService eventService;
-    private ActivityRunPeriodService activityRunPeriodService;
-    private ActivityLoveInterestService activityLoveInterestService;
+    private final EventService eventService;
+    private final ActivityRunPeriodService activityRunPeriodService;
+    private final ActivityLoveInterestService activityLoveInterestService;
 
     @Autowired
     public EventController(EventService eventService, ActivityRunPeriodService activityRunPeriodService, ActivityLoveInterestService activityLoveInterestService) {

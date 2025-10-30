@@ -209,10 +209,11 @@
 
     function cardRadioInputChange(selectedCardId, cardPullNum) {
         checkedCards.set(Number(cardPullNum), selectedCardId);
-        var isLimitedCard = limitedIds.includes(selectedCardId);
-        var cardTypeString = isLimitedCard == "true" ? 'Limited' : 'Standard';
+        var isLimitedCard = limitedIds.includes(Number(selectedCardId));
+        var cardTypeString = isLimitedCard == true ? 'Limited' : 'Standard';
 
         var radio = $('#' + selectedCardId + cardTypeString + '\\[' + cardPullNum + '\\]');
+        var search = $('#cardNameSearch\\[' + cardPullNum + '\\]');
         $('#cardNameSearch\\[' + cardPullNum + '\\]').val($('#' + selectedCardId + cardTypeString + '\\[' + cardPullNum + '\\]')[0].labels[0].textContent);
         hideOtherCardsFromSearch(selectedCardId, cardPullNum);
         var preciseWishAttrName = "'cardPulls[" + cardPullNum + "].preciseWish'";
