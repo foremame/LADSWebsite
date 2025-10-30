@@ -18,9 +18,9 @@ import java.util.*;
 @Controller
 public class PlayerCardController {
 
-    private PlayerCardService playerCardService;
-    private CardService cardService;
-    private PlayerService playerService;
+    private final PlayerCardService playerCardService;
+    private final CardService cardService;
+    private final PlayerService playerService;
 
     @Autowired
     public PlayerCardController(PlayerCardService playerCardService, CardService cardService, PlayerService playerService) {
@@ -40,7 +40,7 @@ public class PlayerCardController {
 
     @GetMapping("playerCard/update")
     public String getPlayerCardUpdateForm(Model model, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information"));
         model.addAttribute("playerCards", playerCardService.getAllPlayerCardsForGivenPlayerId(player.getId()));
         model.addAttribute("rankTypes", new String[]{"R0", "R1", "R2", "R3"});
 
@@ -49,8 +49,8 @@ public class PlayerCardController {
 
     @PostMapping("playerCard/add")
     public String addNewPlayerCard(PlayerCardForm playerCardForm, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
-        Card card = cardService.getCardById(playerCardForm.getCardId()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
+        Card card = cardService.getCardById(playerCardForm.getCardId()).orElseThrow(()->new RuntimeException("Cannot find card information"));
 
         PlayerCard playerCard = new PlayerCard();
 
@@ -76,12 +76,9 @@ public class PlayerCardController {
     @PostMapping("playerCard/update")
     public String updatePlayerCard(PlayerCardForm playerCardForm, Principal principal) {
         Optional<PlayerCard> playerCardOptional = playerCardService.getPlayerCardById(playerCardForm.getPlayerCardId());
-        Player player = playerService.findByUsername(principal.getName()).get();
-
-        if (playerCardOptional.isEmpty()) {
-            throw new RuntimeException("Cannot find existing player card entry for the selected card, update failed");
-        }
-        PlayerCard playerCard = playerCardOptional.get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
+        PlayerCard playerCard = playerCardService.getPlayerCardById(playerCardForm.getPlayerCardId())
+                .orElseThrow(()->new RuntimeException("Cannot find existing player card entry for the selected card, update failed"));
 
         if (!playerCard.getPlayer().getId().equals(player.getId())) {
             throw new RuntimeException("Cannot update player card entry for another player.");
@@ -91,8 +88,7 @@ public class PlayerCardController {
             throw new RuntimeException("Form input error. Something is wrong with the card data submitted");
         }
 
-        if (playerCardForm.getAwakened() == null || playerCard.getLevel() < 80) { playerCard.setAwakened(false); }
-        else { playerCard.setAwakened(playerCardForm.getAwakened()); }
+        playerCard.setAwakened(playerCardForm.getAwakened() != null && playerCard.getLevel() >= 80 && playerCardForm.getAwakened());
         playerCard.setLevel(playerCardForm.getLevel());
         playerCard.setRankType(playerCardForm.getRankType());
 
@@ -103,7 +99,7 @@ public class PlayerCardController {
 
     @GetMapping("/playerCard/list")
     public String getPlayerCardListView(Model model, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
         List<PlayerCard> playerCards = playerCardService.getAllPlayerCardsForGivenPlayerId(player.getId());
 
         model.addAttribute("playerCards", playerCards);
@@ -135,7 +131,7 @@ public class PlayerCardController {
     @RequestMapping(value="/playerCard/getPlayerCardInfoByCardId", method= RequestMethod.GET)
     @ResponseBody
     public Long getPlayerCardInfoByCardId(Long cardId, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
         Optional<PlayerCard> playerCardOptional = playerCardService.getPlayerCardByPlayerAndCardId(player.getId(), cardId);
 
         return playerCardOptional.isPresent() ? playerCardOptional.get().getId() : -1;

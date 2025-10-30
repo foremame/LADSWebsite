@@ -22,10 +22,10 @@ import java.util.*;
 @Controller
 public class BannerController {
 
-    private BannerService bannerService;
-    private BannerCategoryService bannerCategoryService;
-    private ActivityRunPeriodService activityRunPeriodService;
-    private ActivityLoveInterestService activityLoveInterestService;
+    private final BannerService bannerService;
+    private final BannerCategoryService bannerCategoryService;
+    private final ActivityRunPeriodService activityRunPeriodService;
+    private final ActivityLoveInterestService activityLoveInterestService;
 
     @Autowired
     public BannerController(BannerService bannerService, BannerCategoryService bannerCategoryService, ActivityRunPeriodService activityRunPeriodService, ActivityLoveInterestService activityLoveInterestService) {
@@ -80,7 +80,7 @@ public class BannerController {
     @RequestMapping(value="/banner/isMulti", method= RequestMethod.POST)
     @ResponseBody
     public boolean isBannerAMultiBannerGivenBannerId(Long id) {
-        Banner banner = bannerService.getBannerById(id).get();
+        Banner banner = bannerService.getBannerById(id).orElseThrow(()->new RuntimeException("No Banner found for ID: " + id));
         return banner.getBannerCategory().getBannerSubType().equals("Multi");
     }
 

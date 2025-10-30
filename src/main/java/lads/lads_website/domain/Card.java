@@ -36,6 +36,16 @@ public class Card {
     public Card() {
     }
 
+    public Card(String name, String loveInterestType, String rarityType, String cardType, String stellacrumType, String mainStatType, CardOrigin cardOrigin) {
+        this.name = name;
+        this.loveInterestType = loveInterestType;
+        this.rarityType = rarityType;
+        this.cardType = cardType;
+        this.stellacrumType = stellacrumType;
+        this.mainStatType = mainStatType;
+        this.cardOrigin = cardOrigin;
+    }
+
     public Card(Long id, String name, String loveInterestType, String rarityType, String cardType, String stellacrumType, String mainStatType, CardOrigin cardOrigin, List<PlayerCard> playerCards) {
         this.id = id;
         this.name = name;

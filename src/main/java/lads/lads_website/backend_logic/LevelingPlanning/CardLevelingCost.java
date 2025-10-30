@@ -1,6 +1,7 @@
 package lads.lads_website.backend_logic.LevelingPlanning;
 
 import lads.lads_website.domain.*;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
@@ -8,10 +9,6 @@ public class CardLevelingCost {
     private final int EXP_IN_WISH_BOTTLE_N = 10;
     private final int EXP_IN_WISH_BOTTLE_R = 50;
     private final int EXP_IN_WISH_BOTTLE_SR = 250;
-    private final int EXP_IN_WISH_BOTTLE_SSR = 1000;
-    private final int CRYSTAL_N_PER_GENERAL_BOX = 5;
-    private final int CRYSTAL_R_PER_GENERAL_BOX = 2;
-    private final int CRYSTAL_SR_PER_GENERAL_BOX = 1;
 
     private int expCost;
     private int goldCost;
@@ -53,21 +50,11 @@ public class CardLevelingCost {
         goldCost = resourceTracking.getGold();
         for (ResourceTrackingValues rtv : resourceTracking.getResourceTrackingValues()) {
             String resourceType = rtv.getResourceType();
-            switch (resourceType) {
-                case "wish bottle" ->
-                    expCost = rtv.getN() * EXP_IN_WISH_BOTTLE_N + rtv.getR() * EXP_IN_WISH_BOTTLE_R + rtv.getSr() * EXP_IN_WISH_BOTTLE_SR + rtv.getSsr() * EXP_IN_WISH_BOTTLE_SSR;
-                case "violet crystal" ->
-                    crystalCosts.add(new CrystalCost("Violet", rtv.getN(), rtv.getR(), rtv.getSr()));
-                case "pearl crystal" ->
-                    crystalCosts.add(new CrystalCost("Pearl", rtv.getN(), rtv.getR(), rtv.getSr()));
-                case "amber crystal" ->
-                    crystalCosts.add(new CrystalCost("Amber", rtv.getN(), rtv.getR(), rtv.getSr()));
-                case "ruby crystal" ->
-                    crystalCosts.add(new CrystalCost("Ruby", rtv.getN(), rtv.getR(), rtv.getSr()));
-                case "sapphire crystal" ->
-                    crystalCosts.add(new CrystalCost("Sapphire", rtv.getN(), rtv.getR(), rtv.getSr()));
-                case "emerald crystal" ->
-                    crystalCosts.add(new CrystalCost("Emerald", rtv.getN(), rtv.getR(), rtv.getSr()));
+            if (resourceType.equals("wish bottle")) {
+                final int EXP_IN_WISH_BOTTLE_SSR = 1000;
+                expCost = rtv.getN() * EXP_IN_WISH_BOTTLE_N + rtv.getR() * EXP_IN_WISH_BOTTLE_R + rtv.getSr() * EXP_IN_WISH_BOTTLE_SR + rtv.getSsr() * EXP_IN_WISH_BOTTLE_SSR;
+            } else if (resourceType.endsWith("crystal")) {
+                crystalCosts.add(new CrystalCost(StringUtils.capitalize(resourceType.split(" ")[0]), rtv.getN(), rtv.getR(), rtv.getSr()));
             }
         }
         return this;
@@ -133,18 +120,21 @@ public class CardLevelingCost {
                 : numberOfBoxes / boxesNeededPerCrystal.size();
         for (Map.Entry<String, Integer> currentBoxesNeeded : boxesNeededPerCrystal.entrySet()) {
             String[] keyParts = currentBoxesNeeded.getKey().split("_");
-            CrystalCost crystalCost = crystalCosts.stream().filter(cc -> cc.equals(keyParts[0])).findFirst().get();
+            CrystalCost crystalCost = crystalCosts.stream().filter(cc -> cc.equals(keyParts[0])).findFirst()
+                    .orElseThrow(()-> new RuntimeException("Cannot find matching crystal cost for: " + keyParts[0]));
             switch (keyParts[1]) {
                 case "N" -> {
+                    final int CRYSTAL_N_PER_GENERAL_BOX = 5;
                     int crystalsSaved = (lastRun ? boxPerNAndR : currentBoxesNeeded.getValue()) * (isGeneralBox ? CRYSTAL_N_PER_GENERAL_BOX : 1);
                     crystalCost.setN(Math.max(crystalCost.getN() - crystalsSaved, 0));
                 }
                 case "R" -> {
+                    final int CRYSTAL_R_PER_GENERAL_BOX = 2;
                     int crystalsSaved = (lastRun ? boxPerNAndR : currentBoxesNeeded.getValue()) * (isGeneralBox ? CRYSTAL_R_PER_GENERAL_BOX : 1);
                     crystalCost.setR(Math.max(crystalCost.getR() - crystalsSaved, 0));
                 }
                 case "SR" -> {
-                    int crystalsSaved = (lastRun ? boxPerSr : currentBoxesNeeded.getValue()) * (isGeneralBox ? CRYSTAL_SR_PER_GENERAL_BOX : 1);
+                    int crystalsSaved = (lastRun ? boxPerSr : currentBoxesNeeded.getValue());
                     crystalCost.setSr(Math.max(crystalCost.getSr() - crystalsSaved, 0));
                 }
             }
@@ -170,14 +160,17 @@ public class CardLevelingCost {
     }
 
     public static BountyReward getBountyByStellacrum(List<BountyReward> playerBounties, String stellacrum) {
-        String bountyName = "";
+        final String bountyName = getBountyNameByStellacrum(stellacrum);
+        return playerBounties.stream().filter(playerBounty -> playerBounty.getBountyNameType().equals(bountyName)).findFirst()
+                .orElseThrow(()-> new RuntimeException("No bounty found matching: " + bountyName));
+    }
+
+    private static String getBountyNameByStellacrum(String stellacrum) {
         switch (stellacrum) {
-            case "Amber", "Emerald" -> bountyName = "Lemonette";
-            case "Violet", "Pearl" -> bountyName = "Snoozer";
-            case "Ruby", "Sapphire" -> bountyName = "Pumpkin Magus";
+            case "Amber", "Emerald" -> { return "Lemonette"; }
+            case "Violet", "Pearl" -> { return "Snoozer"; }
+            default -> { return "Pumpkin Magus"; }
         }
-        String finalBountyName = bountyName;
-        return playerBounties.stream().filter(playerBounty -> playerBounty.getBountyNameType().equals(finalBountyName)).findFirst().get();
     }
 
     public StaminaCost getStaminaCost(List<BountyReward> bountyRewards) {
@@ -199,7 +192,7 @@ public class CardLevelingCost {
                 case "Snoozer" -> crystalStellacrumFilter = Arrays.asList("Violet", "Pearl");
             }
             if (!crystalStellacrumFilter.isEmpty()) {
-                List<String> finalCrystalStellacrumFilter = crystalStellacrumFilter;
+                final List<String> finalCrystalStellacrumFilter = crystalStellacrumFilter;
                 crystalCosts.stream()
                         .filter(predicate -> predicate.equals(new CrystalCost(finalCrystalStellacrumFilter.getFirst()))
                                 || predicate.equals(new CrystalCost(finalCrystalStellacrumFilter.get(1))))

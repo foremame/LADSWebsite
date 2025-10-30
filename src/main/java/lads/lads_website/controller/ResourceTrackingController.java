@@ -30,9 +30,9 @@ import static org.apache.commons.text.WordUtils.uncapitalize;
 @Controller
 public class ResourceTrackingController {
 
-    private ResourceTrackingService resourceTrackingService;
-    private ResourceTrackingValuesService resourceTrackingValuesService;
-    private PlayerService playerService;
+    private final ResourceTrackingService resourceTrackingService;
+    private final ResourceTrackingValuesService resourceTrackingValuesService;
+    private final PlayerService playerService;
 
     @Autowired
     public ResourceTrackingController(ResourceTrackingService resourceTrackingService, ResourceTrackingValuesService resourceTrackingValuesService, PlayerService playerService) {
@@ -51,7 +51,7 @@ public class ResourceTrackingController {
         RedirectView rv = new RedirectView("/resourceTracking/add");
         rv.setExposeModelAttributes(false);
         if (prepareForm.getSelectPreviousDay()) {
-            Player player = playerService.findByUsername(principal.getName()).get();
+            Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
             Optional<ResourceTracking> rtOpt = resourceTrackingService.getMostRecentResourceTracking(player.getId());
             rtOpt.ifPresent(resourceTracking -> redirectAttributes.addFlashAttribute("lastRT", resourceTracking));
             if (rtOpt.isPresent()) {
@@ -70,7 +70,7 @@ public class ResourceTrackingController {
 
     @GetMapping("/resourceTracking/add")
     public String getResourceTrackingForm(Model model, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
         List<ResourceTypeOnly> resourceTypeOnlyList = resourceTrackingValuesService.getAllResourceTypes();
         List<String> resourceTypes = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class ResourceTrackingController {
 
     @PostMapping("/resourceTracking/add")
     public String saveResourceTrackingFromForm(RTForm rtForm, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
         ResourceTracking rt = new ResourceTracking();
 
         rt.setAddDate(LocalDateTime.now());
@@ -113,9 +113,10 @@ public class ResourceTrackingController {
         return "redirect:/home";
     }
 
+    // todo: refactor this to look cleaner, maybe create helper class as needed
     @GetMapping("resourceTracking/list")
     public String getResourceTrackingList(Model model, Principal principal) {
-        Player player = playerService.findByUsername(principal.getName()).get();
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
         List<ResourceTrackingList> resourceTrackingLists = new ArrayList<>();
         List<ResourceTracking> resources = resourceTrackingService.getAllResourceTrackingByPlayerId(player.getId());
 
@@ -128,25 +129,17 @@ public class ResourceTrackingController {
             ResourceTracking resource = resources.get(i);
             ResourceTrackingList list = new ResourceTrackingList();
             list.setResourceTracking(resource);
-
-            // Current wishes
             int currentWishes = resource.getDeepspaceWish() + (int)Math.floor(resource.getDiamonds()/150f);
             list.setTotalWishes(currentWishes);
 
-            int wishesGainedSinceLastEntry;
-            if (i == 0) {
-                // First entry into the table by the player, so no previous values to reference
-                wishesGainedSinceLastEntry = 0;
-            } else {
+            int wishesGainedSinceLastEntry = 0;
+            if (i > 0) {
                 ResourceTracking previous = resources.get(i - 1);
                 wishesGainedSinceLastEntry = currentWishes - previousWishTotal;
                 if (wishesGainedSinceLastEntry >= 0) {
                     positiveDaysTracked++;
-                    // I want it to only care about the day attached to the add date, not the time as well.
                     long days = ChronoUnit.DAYS.between(previous.getAddDate().toLocalDate(), resource.getAddDate().toLocalDate());
-
                     int wishesGainedByDay = Math.round((float) wishesGainedSinceLastEntry / days);
-
                     wishesGainedByDayPositive += wishesGainedByDay;
                     avgWishesGainedPerDay = wishesGainedByDayPositive / positiveDaysTracked;
                 }

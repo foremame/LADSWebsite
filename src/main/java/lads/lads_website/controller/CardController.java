@@ -13,10 +13,10 @@ import java.util.*;
 @Controller
 public class CardController {
 
-    private CardService cardService;
-    private BannerService bannerService;
-    private CardOriginService cardOriginService;
-    private EventService eventService;
+    private final CardService cardService;
+    private final BannerService bannerService;
+    private final CardOriginService cardOriginService;
+    private final EventService eventService;
 
 
     @Autowired
@@ -29,11 +29,11 @@ public class CardController {
 
     @GetMapping("/card/add")
     public String getCardForm(Model model) {
-        model.addAttribute("originType", Arrays.asList(new String[]{"Event", "Banner"}));
-        model.addAttribute("rarityTypes", Arrays.asList(new String[]{"3 Star", "4 Star", "5 Star"}));
-        model.addAttribute("cardTypes", Arrays.asList(new String[]{"Lunar", "Solar"}));
-        model.addAttribute("stellacrumTypes", Arrays.asList(new String[]{"Amber", "Emerald", "Ruby", "Sapphire", "Violet", "Pearl"}));
-        model.addAttribute("mainStats", Arrays.asList(new String[]{"Attack", "Defense", "Health"}));
+        model.addAttribute("originType", new String[]{"Event", "Banner"});
+        model.addAttribute("rarityTypes", new String[]{"3 Star", "4 Star", "5 Star"});
+        model.addAttribute("cardTypes", new String[]{"Lunar", "Solar"});
+        model.addAttribute("stellacrumTypes", new String[]{"Amber", "Emerald", "Ruby", "Sapphire", "Violet", "Pearl"});
+        model.addAttribute("mainStats", new String[]{"Attack", "Defense", "Health"});
         model.addAttribute("banners", bannerService.getAllBanners());
         model.addAttribute("events", eventService.getAllEvents());
         return "/card/addCard";
@@ -41,48 +41,20 @@ public class CardController {
 
     @PostMapping("/card/add")
     public String addNewCard(CardForm cardForm) {
-
-        Card card = new Card();
-
         CardOrigin cardOrigin;
         if (cardForm.getCardOrigin().equals("Event")) {
-            Optional<Event> eventOptional = eventService.getEventById(cardForm.getEventId());
-            if (eventOptional.isEmpty()) {
-                throw new RuntimeException("Event is not found/set");
-            }
-            Event event = eventOptional.get();
-            Optional<CardOrigin> cardOriginOptional = cardOriginService.getCardOriginByActivityId("Event", event.getId());
-            if (cardOriginOptional.isEmpty()) {
-                cardOrigin = new CardOrigin();
-                cardOrigin.setEvent(event);
-                cardOrigin = cardOriginService.addNewCardOrigin(cardOrigin);
-            } else {
-                cardOrigin = cardOriginOptional.get();
-            }
+            Event event = eventService.getEventById(cardForm.getEventId()).orElseThrow(()->new RuntimeException("No event found for id: " + cardForm.getEventId()));
+            cardOrigin = cardOriginService.getCardOriginByActivityId("Event", event.getId())
+                    .orElse(cardOriginService.addNewCardOrigin(new CardOrigin(event)));
         }
         else {
-            Optional<Banner> bannerOptional = bannerService.getBannerById(cardForm.getBannerId());
-            if (bannerOptional.isEmpty()) {
-                throw new RuntimeException("Banner is not found/set");
-            }
-            Banner banner = bannerOptional.get();
-            Optional<CardOrigin> cardOriginOptional = cardOriginService.getCardOriginByActivityId("Banner", banner.getId());
-            if (cardOriginOptional.isEmpty()) {
-                cardOrigin = new CardOrigin();
-                cardOrigin.setBanner(banner);
-                cardOrigin = cardOriginService.addNewCardOrigin(cardOrigin);
-            } else {
-                cardOrigin = cardOriginOptional.get();
-            }
+            Banner banner = bannerService.getBannerById(cardForm.getBannerId()).orElseThrow(()->new RuntimeException("No banner found for id: " + cardForm.getBannerId()));
+            cardOrigin = cardOriginService.getCardOriginByActivityId("Banner", banner.getId())
+                    .orElse(cardOriginService.addNewCardOrigin(new CardOrigin(banner)));
         }
 
-        card.setCardOrigin(cardOrigin);
-        card.setName(cardForm.getName());
-        card.setCardType(cardForm.getCardType());
-        card.setLoveInterestType(cardForm.getLoveInterestType());
-        card.setMainStatType(cardForm.getMainStatType());
-        card.setRarityType(cardForm.getRarityType());
-        card.setStellacrumType(cardForm.getStellacrumType());
+        Card card = new Card(cardForm.getName(), cardForm.getLoveInterestType(), cardForm.getRarityType(), cardForm.getCardType(),
+                cardForm.getStellacrumType(), cardForm.getMainStatType(), cardOrigin);
 
         cardService.addNewCard(card);
         return "redirect:/home";

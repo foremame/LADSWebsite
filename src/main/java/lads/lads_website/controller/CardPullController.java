@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -151,8 +150,7 @@ public class CardPullController {
     private LocalDateTime getPullTimestamp(String timestamp) {
         try {
             String cleanSpaces = timestamp.replace(" ", "T");
-            LocalDateTime value = LocalDateTime.parse(cleanSpaces);
-            return value;
+            return LocalDateTime.parse(cleanSpaces);
         } catch (DateTimeParseException e) {
             throw new RuntimeException("Could not process timestamp value from string: " + timestamp);
         }

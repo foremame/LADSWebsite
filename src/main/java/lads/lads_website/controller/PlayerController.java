@@ -24,11 +24,11 @@ import java.util.Optional;
 @Controller
 public class PlayerController {
 
-    private PlayerService playerService;
-    private BountyRewardService bountyRewardService;
-    private PlayerBountyService playerBountyService;
+    private final PlayerService playerService;
+    private final BountyRewardService bountyRewardService;
+    private final PlayerBountyService playerBountyService;
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     public PlayerController(PlayerService playerService, BountyRewardService bountyRewardService, PlayerBountyService playerBountyService, UserDetailsService userDetailsService) {

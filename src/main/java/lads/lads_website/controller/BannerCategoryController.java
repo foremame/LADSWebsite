@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class BannerCategoryController {
 
-    private BannerCategoryService bannerCategoryService;
+    private final BannerCategoryService bannerCategoryService;
 
     @Autowired
     public BannerCategoryController(BannerCategoryService bannerCategoryService) {
