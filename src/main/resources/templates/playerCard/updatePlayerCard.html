@@ -5,6 +5,7 @@
     <title>Add New Banner</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <script type="text/javascript" th:src="@{/js/playerCard/updatePlayerCard.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -34,24 +35,8 @@
             <input type="checkbox" id="awakened" name="awakened">
             <label for="awakened"> Card Is Awakened</label>
         </div>
-        <button style="display:none" id="submit" class="submit" type="submit">Submit</button>
+        <button style="display:none" id="btnSubmit" class="submit" type="submit">Submit</button>
     </form>
 </div>
-<script th:inline="javascript" type="text/javascript">
-
-    $("input[name='playerCardId']").change( function() {
-        url_get("/playerCard/getPlayerCardInfoById", {"playerCardId" : $(this).val()}).done( function(msg) {
-            var playerCard = JSON.parse(msg);
-            $("#rankType").val(playerCard["rankType"]);
-            $("#cardLevel").val(Number(playerCard["level"]));
-            $("#awakened")[0].checked = playerCard["awakened"] == "true" ? true : false;
-
-            $("#rankTypeDiv").show();
-            $("#cardLevelDiv").show();
-            $("#awakenedDiv").show();
-            $("#submit").show();
-        });
-    });
-</script>
 </body>
 </html>

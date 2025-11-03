@@ -32,32 +32,26 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
                             // Activity Love Interest Controller
-                            "/activityLoveInterest/getLoveInterestListByActivity",
-                            "/activityLoveInterest/getLoveInterestList",
+                            "/activityLoveInterest/**",
                             // Activity Run Period Controller
-                            "/activityRunPeriod/listBanners",
-                            "/activityRunPeriod/activityRunPeriodBannerList", "/activityRunPeriod/listEvents",
-                            "/activityRunPeriod/activityRunPeriodEventList",
+                            "/activityRunPeriod/**",
                             // Banner Controller
-                            "/banner/isMulti", "/banner/getAll",
+                            "/banner/**",
                             // Banner Category Controller
-                            "/bannerCategory/getSubTypes",
+                            "/bannerCategory/**",
                             // Card Controller
                             // Card Pull Controller
-                            "/cardPull/add", "/cardPull/cardPullForm", "/cardPull/getLimitedCardIds",
+                            "/cardPull/**",
                             // Event Controller
-                            "/event/getAll",
+                            "/event/**",
                             // Leveling Planning Controller
-                            "/levelingPlanning/startPrep", "/levelingPlanning/levelingPrep", "/levelingPlanning/levelingPlanning", "/levelingPlanning/levelingPlanningView",
+                            "/levelingPlanning/**",
                             // Player Card Controller
-                            "/playerCard/add", "/playerCard/addPlayerCard", "/playerCard/update", "/playerCard/updatePlayerCard", "/playerCard/getPlayerCardInfoById",
-                            "/playerCard/list", "/playerCard/listPlayerCard", "/playerCard/getPlayerCardInfoByCardId",
-                            "/playerCard/validatePlayerCard",
+                            "/playerCard/**",
                             // Player Bounty Controller
-                            "/playerBounty/update", "/playerBounty/changeBountyLevel",
+                            "/playerBounty/**",
                             // Resource Tracking Controller
-                            "/resourceTracking/add", "/resourceTracking/addPrep", "/resourceTracking/resourceTrackingFormPrep",
-                            "/resourceTracking/list", "/resourceTracking/resourceTrackingList",
+                            "/resourceTracking/**",
                             // Misc.
                             "/error", "/"
                     ).authenticated();
@@ -65,7 +59,16 @@ public class SecurityConfig {
                 // Javascript/CSS files
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
-                            "/js/CommonMethods.js"
+                            "/js/CommonMethods.js",
+                            "/js/activityRunPeriod/**",
+                            "/js/banner/**",
+                            "/js/card/**",
+                            "/js/cardPull/**",
+                            "/js/event/**",
+                            "/js/levelingPlanning/**",
+                            "/js/playerBounty/**",
+                            "/js/playerCard/**",
+                            "/js/resourceTracking/**"
                     ).authenticated();
                 })
                 // Admin only
