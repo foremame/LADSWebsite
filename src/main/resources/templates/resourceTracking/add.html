@@ -5,6 +5,7 @@
     <title>Add New Resource Tracking</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <script type="text/javascript" th:src="@{/js/resourceTracking/add.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -67,15 +68,5 @@
         <button id="btnSubmit" class="submit" type="submit">Submit</button>
     </form>
 </div>
-<script th:inline="javascript" type="text/javascript">
-    function showResourceType(checked, resourceType) {
-        if (checked == true) {
-            $("#" + resourceType + "ValuesDiv").show();
-        }
-        else {
-            $("#" + resourceType + "ValuesDiv").hide();
-        }
-    }
-</script>
 </body>
 </html>

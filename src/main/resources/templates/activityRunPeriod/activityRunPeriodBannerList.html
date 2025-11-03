@@ -5,6 +5,7 @@
     <title>Add New Resource Tracking</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <script type="text/javascript" th:src="@{/js/activityRunPeriod/activityRunPeriodBannerList.js}"></script>
     <style>
         table, th, td {
             border: 1px solid black;
@@ -36,12 +37,5 @@
         </tr>
     </table>
 </div>
-<script th:inline="javascript" type="text/javascript">
-
-    document.addEventListener('DOMContentLoaded', function() {
-        addTableSort();
-    });
-
-</script>
 </body>
 </html>

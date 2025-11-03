@@ -5,6 +5,7 @@
     <title>Update Bounty Level</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <script type="text/javascript" th:src="@{/js/playerBounty/changeBountyLevel.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -25,34 +26,5 @@
         <button id="btnSubmit" class="submit" type="submit">Submit</button>
     </form>
 </div>
-<script th:inline="javascript" type="text/javascript">
-
-    $("form").submit(function(e) {
-        e.preventDefault();
-        $("#errorDiv").hide();
-        $("#errorDiv").empty();
-
-        var form = this;
-        var issue = false;
-        var errorText = "";
-
-        if ($("#bountyLevel").val() < 1 || $("#bountyLevel").val() > 9) {
-            issue = true;
-            errorText += "<p>Invalid bounty level, please choose a level between 1 - 9.</p>";
-        }
-        if($("#bountyName").val() == "") {
-            issue = true;
-            errorText += "<p>Please select a bounty.</p>";
-        }
-
-        if (issue == true) {
-            $("#errorDiv").append(errorText);
-            $("#errorDiv").show();
-        }
-        else {
-            form.submit();
-        }
-    });
-</script>
 </body>
 </html>
