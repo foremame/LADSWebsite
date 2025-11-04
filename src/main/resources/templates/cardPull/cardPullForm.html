@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
-    <script th:inline="javascript" type="text/javascript" th:src="@{/js/cardPull/cardPullForm.js}"></script>
+    <script th:inline="javascript">
+        var bannerId = /*[[${bannerId}]]*/;
+        var date = /*[[${date}]]*/;
+        var time = /*[[${time}]]*/;
+    </script>
+    <script type="text/javascript" th:src="@{/js/cardPull/cardPullForm.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -15,24 +21,24 @@
     <div th:if="${errorMsg}" class="error-message">
         <p th:text="${errorMsg}"></p>
     </div>
-    <div id="errorDiv" style="display:none">
+    <div id="errorDiv" class="hidden">
     </div>
     <form name="cardPullForm" action="/cardPull/add" method="post">
         <div class="form-group" id="bannerList">
             <label for="bannerNameSearch">Banner:</label>
-            <input type="text" id="bannerNameSearch" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
+            <input type="text" id="bannerNameSearch" class="search-bar" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
             <ul id="bannersUL">
-                <li th:each="banner: ${banners}" style="display:none">
+                <li th:each="banner: ${banners}" class="hidden">
                     <input type="radio" th:id="${'Banner' + banner.id}" name="bannerId" th:value="${banner.id}">
                     <label th:for="${'Banner' + banner.id}" th:text="${banner.name}"></label>
                 </li>
             </ul>
         </div>
-        <div class="form-group" id="pullTimestampDiv" style="display:none">
+        <div class="form-group hidden" id="pullTimestampDiv">
             <label for="pullTimestamp">Pull Timestamp (YYYY-MM-DD HH:MM:SS):</label>
             <input type="text" id="pullTimestamp" name="pullTimestamp" placeholder="Enter pull timestamp here...">
         </div>
-        <div class="form-group" id="pullTypeDiv" style="display:none">
+        <div class="form-group hidden" id="pullTypeDiv">
             <ul id="pullTypeUL">
                 <li>
                     <label for="singlePull">Single Pull:</label>
@@ -44,45 +50,45 @@
                 </li>
             </ul>
         </div>
-        <div class="form-group" id="cardList[0]" style="display:none">
+        <div class="form-group hidden" id="cardList[0]">
             <label for="cardNameSearch[0]">Card Pulled:</label>
-            <input type="text" id="cardNameSearch[0]" onkeyup="searchForNameLimited(0)" placeholder="Search for card name..">
+            <input type="text" id="cardNameSearch[0]" class="search-bar" onkeyup="searchForNameLimited(0)" placeholder="Search for card name..">
             <ul id="cardsUL[0]">
-                <li th:each="standardCard: ${standardCards}" style="display:none">
+                <li th:each="standardCard: ${standardCards}" class="hidden">
                     <input type="radio" th:id="${standardCard.id + 'Standard[0]'}" name="cardPulls[0].cardId" th:value="${standardCard.id}" onchange="cardRadioInputChange(this.value, 0)">
                     <label th:for="${standardCard.id + 'Standard[0]'}" th:text="${standardCard.name}"></label>
                 </li>
-                <li th:each="limitedCard: ${limitedCards}" style="display:none">
+                <li th:each="limitedCard: ${limitedCards}" class="hidden">
                     <input type="radio" th:id="${limitedCard.id + 'Limited[0]'}" name="cardPulls[0].cardId" th:value="${limitedCard.id}" onchange="cardRadioInputChange(this.value, 0)">
                     <label th:for="${limitedCard.id + 'Limited[0]'}" th:text="${limitedCard.name}"></label>
                 </li>
             </ul>
         </div>
-        <div class="form-group" id="preciseWishDiv[0]" style="display:none">
+        <div class="form-group hidden" id="preciseWishDiv[0]">
             <input id="preciseWish[0]" name="cardPulls[0].preciseWish" type="checkbox" />
             <label for="preciseWish[0]">Precise Wish</label>
         </div>
-        <div th:each="i : ${#numbers.sequence( 1, 9, 1)}" th:id="${i + 'cardPullsMultiple'}" style="display:none">
-            <div class="form-group" th:id="${'cardList[' + i + ']'}" style="display:none">
+        <div th:each="i : ${#numbers.sequence( 1, 9, 1)}" th:id="${i + 'cardPullsMultiple'}" class="hidden">
+            <div class="form-group hidden" th:id="${'cardList[' + i + ']'}">
                 <label th:for="${'cardNameSearch[' + i + ']'}">Card Pulled:</label>
-                <input type="text" th:id="${'cardNameSearch[' + i + ']'}" th:attr="onkeyup=|searchForNameLimited('${i}')|" placeholder="Search for card name..">
+                <input class="search-bar" type="text" th:id="${'cardNameSearch[' + i + ']'}" th:attr="onkeyup=|searchForNameLimited('${i}')|" placeholder="Search for card name..">
                 <ul th:id="${'cardsUL[' + i + ']'}">
-                    <li th:each="standardCard: ${standardCards}" style="display:none">
+                    <li th:each="standardCard: ${standardCards}" class="hidden">
                         <input type="radio" th:id="${standardCard.id + 'Standard[' + i + ']'}" th:name="${'cardPulls[' + i + '].cardId'}" th:value="${standardCard.id}" th:attr="onchange=|cardRadioInputChange(this.value,'${i}')|">
                         <label th:for="${standardCard.id + 'Standard[' + i + ']'}" th:text="${standardCard.name}"></label>
                     </li>
-                    <li th:each="limitedCard: ${limitedCards}" style="display:none">
+                    <li th:each="limitedCard: ${limitedCards}" class="hidden">
                         <input type="radio" th:id="${limitedCard.id + 'Limited[' + i + ']'}" th:name="${'cardPulls[' + i + '].cardId'}" th:value="${limitedCard.id}" th:attr="onchange=|cardRadioInputChange(this.value,'${i}')|">
                         <label th:for="${limitedCard.id + 'Limited[' + i + ']'}" th:text="${limitedCard.name}"></label>
                     </li>
                 </ul>
             </div>
-            <div class="form-group" th:id="${'preciseWishDiv[' + i +']'}" style="display:none">
+            <div class="form-group hidden" th:id="${'preciseWishDiv[' + i +']'}">
                 <input th:id="${'preciseWish[' + i +']'}" th:name="${'cardPulls[' + i +'].preciseWish'}" type="checkbox" />
                 <label th:for="${'preciseWish[' + i +']'}">Precise Wish</label>
             </div>
         </div>
-        <div id="submitButtonDiv" style="display:none">
+        <div id="submitButtonDiv" class="hidden">
             <button class="submit" type="submit">Submit</button>
         </div>
     </form>

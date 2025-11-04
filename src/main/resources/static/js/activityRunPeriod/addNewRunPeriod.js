@@ -12,7 +12,7 @@ $(document).ready(function(){
 
         if (!activityId) {
             issue = true;
-            errorText += "<p>No " + activityType + " is selected.</p>";
+            errorText += "<p class='error-color'>No " + activityType + " is selected.</p>";
         }
 
         var params = {"startDate" : $("#startDate").val(), "endDate" : $("#endDate").val(),

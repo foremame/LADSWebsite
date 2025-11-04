@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-<div class="container">
+<header class="nav-bar">
+    <p>LADS Website</p>
+</header>
+<div class="wrapper">
     <h1 th:text="${'Welcome ' + user.username + '!'}"></h1>
     <h2>Forms for updating user information:</h2>
     <p><a href="/cardPull/add">Register new card pull</a></p>

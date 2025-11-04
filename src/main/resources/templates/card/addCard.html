@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Banner</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
     <script type="text/javascript" th:src="@{/js/card/addCard.js}"></script>
 </head>
 <body>
 <div class="container">
-    <div id="errorDiv" style="display:none">
+    <div id="errorDiv" class="hidden">
     </div>
     <form name="cardForm" action="/card/add" method="post">
         <div class="form-group">
@@ -22,57 +23,57 @@
             <label for="bannerOrigin">Card is from a banner:</label>
             <input type="radio" id="bannerOrigin" name="cardOrigin" value="Banner">
         </div>
-        <div class="form-group" id="eventDiv" style="display:none">
+        <div class="form-group hidden" id="eventDiv">
             <label for="eventNameSearch">Event:</label>
-            <input type="text" id="eventNameSearch" onkeyup="searchForName('eventNameSearch','eventsUL')" placeholder="Search for event name..">
+            <input type="text" id="eventNameSearch" class="search-bar" onkeyup="searchForName('eventNameSearch','eventsUL')" placeholder="Search for event name..">
             <ul id="eventsUL">
-                <li th:each="event: ${events}" style="display:none">
+                <li th:each="event: ${events}" class="hidden">
                     <input type="radio" th:id="${'Event' + event.id}" name="eventId" th:value="${event.id}">
                     <label th:for="${'Event' + event.id}" th:text="${event.name}"></label>
                 </li>
             </ul>
         </div>
-        <div class="form-group" id="bannerDiv" style="display:none">
+        <div class="form-group hidden" id="bannerDiv">
             <label for="bannerNameSearch">Banner:</label>
-            <input type="text" id="bannerNameSearch" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
+            <input type="text" id="bannerNameSearch" class="search-bar" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
             <ul id="bannersUL">
-                <li th:each="banner: ${banners}" style="display:none">
+                <li th:each="banner: ${banners}" class="hidden">
                     <input type="radio" th:id="${'Banner' + banner.id}" name="bannerId" th:value="${banner.id}">
                     <label th:for="${'Banner' + banner.id}" th:text="${banner.name}"></label>
                 </li>
             </ul>
         </div>
-        <div class="form-group" id="loveInterestDiv" style="display:none">
+        <div class="form-group hidden" id="loveInterestDiv">
         </div>
-        <div class="form-group" id="rarityTypeDiv" style="display:none">
+        <div class="form-group hidden" id="rarityTypeDiv">
             <label for="rarityTypes">Card Rarity:</label>
             <select id="rarityTypes" name="rarityType">
                 <option value="">--Please Choose An Option--</option>
                 <option th:each="rarityType : ${rarityTypes}" th:value="${rarityType}" th:text="${rarityType}"></option>
             </select>
         </div>
-        <div class="form-group" id="cardTypeDiv" style="display:none">
+        <div class="form-group hidden" id="cardTypeDiv">
             <label for="cardTypes">Card Type:</label>
             <select id="cardTypes" name="cardType">
                 <option value="">--Please Choose An Option--</option>
                 <option th:each="cardType : ${cardTypes}" th:value="${cardType}" th:text="${cardType}"></option>
             </select>
         </div>
-        <div class="form-group" id="stellacrumTypeDiv" style="display:none">
+        <div class="form-group hidden" id="stellacrumTypeDiv">
             <label for="stellacrumTypes">Stellacrum:</label>
             <select id="stellacrumTypes" name="stellacrumType">
                 <option value="">--Please Choose An Option--</option>
                 <option th:each="stellacrum : ${stellacrumTypes}" th:value="${stellacrum}" th:text="${stellacrum}"></option>
             </select>
         </div>
-        <div class="form-group" id="mainStatDiv" style="display:none">
+        <div class="form-group hidden" id="mainStatDiv">
             <label for="mainStats">Main Stat:</label>
             <select id="mainStats" name="mainStatType">
                 <option value="">--Please Choose An Option--</option>
                 <option th:each="mainStat : ${mainStats}" th:value="${mainStat}" th:text="${mainStat}"></option>
             </select>
         </div>
-        <button style="display:none" id="btnSubmit" class="submit" type="submit">Submit</button>
+        <button id="btnSubmit" class="submit hidden" type="submit">Submit</button>
     </form>
 </div>
 </body>

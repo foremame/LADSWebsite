@@ -3,7 +3,7 @@ var isMulti = false;
 const checkedCards = new Map();
 
 document.addEventListener('DOMContentLoaded', function() {
-    var bannerId = /*[[${bannerId}]]*/;
+    //var bannerId = /*[[${bannerId}]]*/;
     if (bannerId) {
         url_post("/cardPull/getLimitedCardIds", {"bannerId" : bannerId}).done( function(msg) {
             var ids = JSON.parse(msg);
@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
         var bannerRadio = $('#Banner' + bannerId)[0];
         $('#bannerNameSearch').val(bannerRadio.labels[0].textContent);
         bannerRadio.checked = true;
-        bannerRadio.parentElement.style.display = "";
-        var date = /*[[${date}]]*/;
-        var time = /*[[${time}]]*/;
+        bannerRadio.parentElement.style.display = "block";
+        //var date = /*[[${date}]]*/;
+        //var time = /*[[${time}]]*/;
         $('#pullTimestamp').val(date + " " + time);
         $('#pullTimestampDiv').show();
         $('#pullTypeDiv').show();
@@ -42,7 +42,7 @@ $(document).ready(function(){
                 if (!checkedVal) {
                     issue = true;
                     var number = i + 1;
-                    errorText += "<p>Card " + number + " is not selected.</p>";
+                    errorText += "<p class='error-color'>Card " + number + " is not selected.</p>";
                 }
             }
         }
@@ -50,7 +50,7 @@ $(document).ready(function(){
             var checkedVal = $("input[name='cardPulls\\[0\\].cardId']:checked").val();
             if (!checkedVal) {
                 issue = true;
-                errorText += "<p>Please select a card.</p>";
+                errorText += "<p class='error-color'>Please select a card.</p>";
             }
         }
 
@@ -131,7 +131,7 @@ function cardRadioInputChange(selectedCardId, cardPullNum) {
     var checkbox = $("[name=" + preciseWishAttrName + "]")[0];
     if (isMulti) {
         if (isLimitedCard) {
-            checkbox.parentElement.style.display = "";
+            checkbox.parentElement.style.display = "block";
         }
         else {
             checkbox.parentElement.style.display = "none";
