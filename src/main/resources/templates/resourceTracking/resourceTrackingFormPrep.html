@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Resource Tracking</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/resourceTracking/resourceTrackingFormPrep.js}"></script>
 </head>
@@ -16,7 +17,7 @@
             <label for="selectPreviousDayNo">No</label>
             <input type="radio" id="selectPreviousDayNo" name="selectPreviousDay" value="false" required>
         </div>
-        <button id="btnSubmit" class="submit" type="submit" style="display:none">Next</button>
+        <button id="btnSubmit" class="submit hidden" type="submit">Next</button>
     </form>
 </div>
 </body>

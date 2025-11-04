@@ -12,27 +12,27 @@ $(document).ready(function(){
 
         if (!activityId) {
             issue = true;
-            errorText += "<p>Please select a banner/event.</p>";
+            errorText += "<p class='error-color'>Please select a banner/event.</p>";
         }
         if ($("#loveInterest").val() == "") {
             issue = true;
-            errorText += "<p>Please select a love interest.</p>";
+            errorText += "<p class='error-color'>Please select a love interest.</p>";
         }
         if ($("#rarityTypes").val() == "") {
             issue = true;
-            errorText += "<p>Please select a card rarity.</p>";
+            errorText += "<p class='error-color'>Please select a card rarity.</p>";
         }
         if ($("#cardTypes").val() == "") {
             issue = true;
-            errorText += "<p>Please select a card type.</p>";
+            errorText += "<p class='error-color'>Please select a card type.</p>";
         }
         if ($("#stellacrumTypes").val() == "") {
             issue = true;
-            errorText += "<p>Please select a stellacrum color.</p>";
+            errorText += "<p class='error-color'>Please select a stellacrum color.</p>";
         }
         if ($("#mainStats").val() == "") {
             issue = true;
-            errorText += "<p>Please select a main stat.</p>";
+            errorText += "<p class='error-color'>Please select a main stat.</p>";
         }
 
         var params = {"cardName" : $("#name").val()};

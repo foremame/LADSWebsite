@@ -68,7 +68,8 @@ public class SecurityConfig {
                             "/js/levelingPlanning/**",
                             "/js/playerBounty/**",
                             "/js/playerCard/**",
-                            "/js/resourceTracking/**"
+                            "/js/resourceTracking/**",
+                            "/css/**"
                     ).authenticated();
                 })
                 // Admin only

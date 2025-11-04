@@ -9,11 +9,11 @@ $(document).ready(function(){
         var errorText = "";
         if ($("#mainType").val() == "") {
             issue = true;
-            errorText += "<p>Please select an event type</p>";
+            errorText += "<p class='error-color'>Please select an event type</p>";
         }
         if ($("#loveInterestDiv").find('input').filter(':checked').length == 0) {
             issue = true;
-            errorText += "<p>Please select at least one love interest</p>";
+            errorText += "<p class='error-color'>Please select at least one love interest</p>";
         }
         var params = {"eventName" : $("#name").val(), "startDate" : $("#startDate").val(), "endDate" : $("#endDate").val()};
         validateByUrl("/event/validateEventForm", params, issue, errorText, form);

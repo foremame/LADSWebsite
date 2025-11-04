@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -30,7 +31,7 @@
     </form>
 </div>
 <div>
-    <span th:if="${Userexist}" style="color: red;">Username is Taken</span>
+    <span th:if="${Userexist}" class="error-color">Username is Taken</span>
 </div>
 </body>
 </html>

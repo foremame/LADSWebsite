@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Run Period For Banner/Event</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
     <script type="text/javascript" th:src="@{/js/activityRunPeriod/addNewRunPeriod.js}"></script>
 </head>
 <body>
 <div class="container">
-    <div id="errorDiv" style="display:none">
+    <div id="errorDiv" class="hidden">
     </div>
     <form name="activityRunPeriodForm" action="/activityRunPeriod/add" method="post">
         <div class="form-group" id="activityTypeDiv">
@@ -18,9 +19,9 @@
             <label for="bannerOrigin">New Banner Rerun:</label>
             <input type="radio" id="bannerOrigin" name="activityType" value="Banner">
         </div>
-        <div class="form-group" id="eventDiv" style="display:none">
+        <div class="form-group hidden" id="eventDiv">
             <label for="eventNameSearch">Event:</label>
-            <input type="text" id="eventNameSearch" onkeyup="searchForName('eventNameSearch', 'eventsUL')" placeholder="Search for event name..">
+            <input type="text" id="eventNameSearch" class="search-bar" onkeyup="searchForName('eventNameSearch', 'eventsUL')" placeholder="Search for event name..">
             <ul id="eventsUL">
                 <li th:each="event: ${events}" style="display:none">
                     <input type="radio" th:id="${'Event' + event.id}" name="eventId" th:value="${event.id}">
@@ -28,25 +29,25 @@
                 </li>
             </ul>
         </div>
-        <div class="form-group" id="bannerDiv" style="display:none">
+        <div class="form-group hidden" id="bannerDiv">
             <label for="bannerNameSearch">Banner:</label>
-            <input type="text" id="bannerNameSearch" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
+            <input type="text" id="bannerNameSearch" class="search-bar" onkeyup="searchForName('bannerNameSearch','bannersUL')" placeholder="Search for banner name..">
             <ul id="bannersUL">
-                <li th:each="banner: ${banners}" style="display:none">
+                <li th:each="banner: ${banners}" class="hidden">
                     <input type="radio" th:id="${'Banner' + banner.id}" name="bannerId" th:value="${banner.id}">
                     <label th:for="${'Banner' + banner.id}" th:text="${banner.name}"></label>
                 </li>
             </ul>
         </div>
-        <div style="display:none" class="form-group" id="startDiv">
+        <div class="form-group hidden" id="startDiv">
             <label for="startDate">Start Date (YYYY-MM-DD):</label>
             <input type="text" id="startDate" name="startDate" required>
         </div>
-        <div style="display:none" class="form-group" id="endDiv">
+        <div class="form-group hidden" id="endDiv">
             <label for="endDate">End Date (YYYY-MM-DD):</label>
             <input type="text" id="endDate" name="endDate" required>
         </div>
-        <button style="display:none" id="btnSubmit" class="submit" type="submit">Submit</button>
+        <button id="btnSubmit" class="submit hidden" type="submit">Submit</button>
     </form>
 </div>
 </body>

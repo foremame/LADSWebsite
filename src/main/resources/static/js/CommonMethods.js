@@ -15,14 +15,14 @@ function searchForName(searchId, listId, ids, include) {
             var curValue = Number(radioInput.value);
             if (ids && include == "true" && radioInput.id.indexOf("Limited") > -1) {
                 if (ids.includes(curValue)) {
-                    li[i].style.display = "";
+                    li[i].style.display = "block";
                 }
             }
             else if (ids && include == "false") {
-                li[i].style.display = !ids.includes(curValue) ? "" : "none";
+                li[i].style.display = !ids.includes(curValue) ? "block" : "none";
             }
             else {
-                li[i].style.display = "";
+                li[i].style.display = "block";
             }
         } else {
             li[i].style.display = "none";
@@ -83,7 +83,7 @@ function validateByUrl(url, params, issue, errorText, form) {
 
         for (let curError of validation) {
             issue = true;
-            errorText += "<p>" + curError + "</p>";
+            errorText += "<p class='error-color'>" + curError + "</p>";
         }
 
         if (issue == true) {

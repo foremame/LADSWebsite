@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Resource Tracking</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
     <script type="text/javascript" th:src="@{/js/resourceTracking/add.js}"></script>
@@ -41,7 +42,7 @@
         <div th:each="resourceType,iterStat : ${resourceTypes}" th:with="noSpaces = ${#strings.replace(resourceType,' ','')}" th:id="${noSpaces + 'Div'}">
             <label th:for="${noSpaces + 'Checkbox'}" th:text="${'Show ' + resourceType + ': '}"></label>
             <input type="checkbox" th:id="${noSpaces + 'Checkbox'}" th:attr="onchange=|showResourceType(this.checked,'${noSpaces}')|"><br>
-            <div th:id="${noSpaces + 'ValuesDiv'}" style="display:none">
+            <div th:id="${noSpaces + 'ValuesDiv'}" class="hidden">
                 <input type="hidden" th:name="${'rtValuesForms[' + iterStat.index + '].resourceTypeName'}" th:value="${resourceType}">
                 <div class="form-group" th:if="${resourceType == 'Ascension Crystal Box'}" th:id="${noSpaces + 'GeneralDiv'}">
                     <label th:for="${noSpaces + 'GeneralId'}" th:text="${resourceType + ' General:'}"></label>

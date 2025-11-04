@@ -14,9 +14,6 @@ function changeCardForm() {
                 hideOldCardDiv(j);
             }
         }
-        var rarities = /*[[${rarities}]]*/;
-        var stellacrums = /*[[${stellacrums}]]*/;
-        var playerCards = /*[[${playerCards}]]*/;
         // For each additional card the user wants to level (compared to the last time this function was run):
         // Add a new card leveling form group to the page.
         for (i = numCardPrev; i < numCards; i++) {
@@ -25,7 +22,7 @@ function changeCardForm() {
 
             // If the card form for this number has already been generated, show it
             if (divElement) {
-                divElement.style.display = "";
+                divElement.style.display = "block";
             }
             else {
                 var appendString = '<div id="' + nameAndId + 'Div">';
