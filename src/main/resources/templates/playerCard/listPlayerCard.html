@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <title>Add New Resource Tracking</title>
     <link rel="stylesheet" th:href="@{/css/global.css}">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
-    <script type="text/javascript" th:src="@{/js/playerCard/listPlayerCard.js}"></script>
 </head>
 <body>
-<div class="container">
+<div id="nav-bar">
+</div>
+<div id="container" class="container hidden">
     <h1>Owned Cards: </h1>
     <table>
         <tr>
@@ -36,10 +35,13 @@
             <td th:text="${playerCard.level}"></td>
             <td th:text="${playerCard.awakened}"></td>
             <td th:text="${card.cardOrigin.banner} ? ${card.cardOrigin.banner.name} : ${card.cardOrigin.event.name}"></td>
-            <td th:text="placeholder"></td>
+            <td><a th:href="${'/playerCard/update/' + playerCard.id}">Update Card</a></td>
         </tr>
     </table>
 
 </div>
 </body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+<script type="text/javascript" th:src="@{/js/playerCard/listPlayerCard.js}"></script>
 </html>

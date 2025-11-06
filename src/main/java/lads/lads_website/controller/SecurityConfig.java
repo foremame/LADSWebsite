@@ -53,7 +53,7 @@ public class SecurityConfig {
                             // Resource Tracking Controller
                             "/resourceTracking/**",
                             // Misc.
-                            "/error", "/"
+                            "/error"
                     ).authenticated();
                 })
                 // Javascript/CSS files
@@ -70,7 +70,7 @@ public class SecurityConfig {
                             "/js/playerCard/**",
                             "/js/resourceTracking/**",
                             "/css/**"
-                    ).authenticated();
+                    ).permitAll();
                 })
                 // Admin only
                 .authorizeHttpRequests(registry -> {
@@ -83,7 +83,8 @@ public class SecurityConfig {
                     ).hasAuthority("ADMIN");
                 })
                 .authorizeHttpRequests(registry->{
-                    registry.requestMatchers("/register", "/home", "/player/register").permitAll();
+                    registry.requestMatchers("/register", "/home", "/", "/player/register",
+                            "/header", "/player/getCurrentUser").permitAll();
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer

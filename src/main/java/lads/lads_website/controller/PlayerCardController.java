@@ -47,6 +47,16 @@ public class PlayerCardController {
         return "/playerCard/updatePlayerCard";
     }
 
+    @GetMapping("playerCard/update/{id}")
+    public String getPlayerCardUpdateFormWithId(Model model, Principal principal, @PathVariable Long id) {
+        Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information"));
+        model.addAttribute("selectedCard", id);
+        model.addAttribute("playerCards", playerCardService.getAllPlayerCardsForGivenPlayerId(player.getId()));
+        model.addAttribute("rankTypes", new String[]{"R0", "R1", "R2", "R3"});
+
+        return "/playerCard/updatePlayerCard";
+    }
+
     @PostMapping("playerCard/add")
     public String addNewPlayerCard(PlayerCardForm playerCardForm, Principal principal) {
         Player player = playerService.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Cannot find player information."));
@@ -94,7 +104,7 @@ public class PlayerCardController {
 
         playerCardService.updatePlayerCard(playerCard);
 
-        return "redirect:/home";
+        return "redirect:/playerCard/list";
     }
 
     @GetMapping("/playerCard/list")

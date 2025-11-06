@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header class="nav-bar">
+    <h2 class="nav-bar-left"><a href="/">LADS Website</a></h2>
+    <p th:if="${user == null}" class="nav-bar-right"><a href="/login">Login</a></p>
+</header>
+</html>

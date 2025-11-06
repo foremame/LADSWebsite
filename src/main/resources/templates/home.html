@@ -5,13 +5,14 @@
     <title>Home</title>
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <script src="https://kit.fontawesome.com/d1cab11758.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<header class="nav-bar">
-    <p>LADS Website</p>
-</header>
-<div class="wrapper">
-    <h1 th:text="${'Welcome ' + user.username + '!'}"></h1>
+<div id="nav-bar">
+</div>
+<div id="container" class="wrapper hidden">
+    <h1 th:if="${user}" th:text="${'Welcome ' + user.username + '!'}"></h1>
     <h2>Forms for updating user information:</h2>
     <p><a href="/cardPull/add">Register new card pull</a></p>
     <p><a href="/resourceTracking/addPrep">Add to resource tracker</a></p>
@@ -24,7 +25,7 @@
     <p><a href="/playerCard/list">View All Owned Cards</a></p>
     <p><a href="/playerBounty/update">Update Max Bounty Level</a></p>
     <p><a href="/logout">Logout</a></p>
-    <div th:if="${#strings.equals(user.authorities[0], 'ADMIN')}" id="adminLinks">
+    <div th:if="${user != null and #strings.equals(user.permissionLevel, 'admin')}" id="adminLinks">
         <h2>Admin links:</h2>
         <p><a href="/banner/add">Add new banner</a></p>
         <p><a href="/event/add">Add new event</a></p>

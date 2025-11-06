@@ -11,9 +11,9 @@ import java.util.Optional;
 @Service
 public class PlayerService {
 
-    private PlayerRepository playerRepository;
+    private final PlayerRepository playerRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository, PasswordEncoder passwordEncoder) {

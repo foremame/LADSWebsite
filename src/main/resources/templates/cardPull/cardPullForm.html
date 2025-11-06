@@ -14,7 +14,9 @@
     <script type="text/javascript" th:src="@{/js/cardPull/cardPullForm.js}"></script>
 </head>
 <body>
-<div class="container">
+<div id="nav-bar">
+</div>
+<div id="container" class="container hidden">
     <div th:if="${numCards}" class="success-message">
         <p th:text="${numCards == 1} ? ${numCards} + ' card added to pull tracker!' : ${numCards} + ' cards added to pull tracker!'"></p>
     </div>

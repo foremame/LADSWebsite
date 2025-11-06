@@ -1,3 +1,25 @@
+// waffling on how I want to include the header... I will figure out later what is most efficient
+//<script type="text/javascript">loadHeader();</script>
+function loadHeader() {
+    let div = document.getElementById('nav-bar');
+    url_get("/player/getCurrentUser").done(function(msg) {
+        var player = msg != "" ? JSON.parse(msg) : null;
+        var htmlVal = '<header class="nav-bar">';
+        htmlVal += '<h2 class="nav-bar-left"><a href="/">LADS Website</a></h2>';
+        if (player == null) {
+            htmlVal += '<p class="nav-bar-right"><a href="/login">Login</a></p>';
+        }
+        htmlVal += '</header>';
+        div.innerHTML = htmlVal;
+        $('#container').show();
+    });
+}
+
+$(document).ready(function(){
+    $("#nav-bar").load("/header");
+    $('#container').show();
+});
+
 function searchForName(searchId, listId, ids, include) {
     // Declare variables
     var input, filter, ul, li, label, i, txtValue;
@@ -77,13 +99,24 @@ function hideOtherCardsFromSearch(cardId, cardPullNum) {
     }
 }
 
+function hideItemsFromSearch(id, listId, itemNum) {
+    ul = itemNum != null ? document.getElementById(listId + "[" + itemNum + "]") : document.getElementById(listId);
+    li = ul.getElementsByTagName('li');
+    for (i=0; i < li.length; i++) {
+        var input = li[i].getElementsByTagName("input")[0];
+        if (input.value != id) {
+            li[i].style.display = "none";
+        }
+    }
+}
+
 function validateByUrl(url, params, issue, errorText, form) {
     url_get(url, params).done( function (msg){
         var validation = JSON.parse(msg);
 
         for (let curError of validation) {
             issue = true;
-            errorText += "<p class='error-color'>" + curError + "</p>";
+            errorText += "<p class='error-message'>" + curError + "</p>";
         }
 
         if (issue == true) {

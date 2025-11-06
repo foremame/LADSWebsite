@@ -10,11 +10,11 @@ $(document).ready(function(){
 
         if ($("#bountyLevel").val() < 1 || $("#bountyLevel").val() > 9) {
             issue = true;
-            errorText += "<p class='error-color'>Invalid bounty level, please choose a level between 1 - 9.</p>";
+            errorText += "<p class='error-message'>Invalid bounty level, please choose a level between 1 - 9.</p>";
         }
         if($("#bountyName").val() == "") {
             issue = true;
-            errorText += "<p class='error-color'>Please select a bounty.</p>";
+            errorText += "<p class='error-message'>Please select a bounty.</p>";
         }
 
         if (issue == true) {
