@@ -9,9 +9,9 @@
     <script type="text/javascript" th:src="@{/js/banner/add.js}"></script>
 </head>
 <body>
-<div id="nav-bar">
+<div th:replace="fragments/header :: header">
 </div>
-<div id="container" class="container hidden">
+<div id="container" class="container">
     <div id="errorDiv" class="hidden">
     </div>
     <form name="bannerForm" action="/banner/add" method="post">

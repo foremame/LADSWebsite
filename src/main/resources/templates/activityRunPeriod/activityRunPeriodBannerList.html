@@ -9,9 +9,9 @@
     <script type="text/javascript" th:src="@{/js/activityRunPeriod/activityRunPeriodBannerList.js}"></script>
 </head>
 <body>
-<div id="nav-bar">
+<div th:replace="fragments/header :: header">
 </div>
-<div id="container" class="container hidden">
+<div id="container" class="container">
     <h1>Banner Runs: </h1>
     <table>
         <tr>

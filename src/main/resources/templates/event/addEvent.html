@@ -9,9 +9,9 @@
     <script type="text/javascript" th:src="@{/js/event/addEvent.js}"></script>
 </head>
 <body>
-<div id="nav-bar">
+<div th:replace="fragments/header :: header">
 </div>
-<div id="container" class="container hidden">
+<div id="container" class="container">
     <form name="eventForm" action="/event/add" method="post">
         <div class="form-group">
             <label for="name">Event Name:</label>

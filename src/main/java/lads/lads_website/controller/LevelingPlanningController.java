@@ -55,8 +55,7 @@ public class LevelingPlanningController {
         Player player = playerService.findByUsername(principal.getName()).orElseThrow(() -> new RuntimeException("Cannot load player information."));
         List<BountyReward> playerBounties = playerBountyService.getAllBountyRewardsForPlayer(player.getId());
 
-        Optional<ResourceTracking> resourceTrackingOptional = resourceTrackingService.getMostRecentResourceTracking(player.getId());
-        ResourceTracking currentPlayerResources = resourceTrackingOptional.orElseGet(resourceTrackingService::getEmpty);
+        ResourceTracking currentPlayerResources = resourceTrackingService.getMostRecentResourceTracking(player.getId()).orElseGet(resourceTrackingService::getEmpty);
 
         List<CardLevelingCost> cardLevelingCosts = getCardLevelingCosts(levelingPlanningForm);
         CardLevelingCost totalLevelingCost = new CardLevelingCost();

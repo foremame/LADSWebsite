@@ -9,9 +9,9 @@
     <script src="https://kit.fontawesome.com/d1cab11758.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<div id="nav-bar">
+<div th:replace="fragments/header :: header">
 </div>
-<div id="container" class="wrapper hidden">
+<div id="container" class="wrapper">
     <h1 th:if="${user}" th:text="${'Welcome ' + user.username + '!'}"></h1>
     <h2>Forms for updating user information:</h2>
     <p><a href="/cardPull/add">Register new card pull</a></p>

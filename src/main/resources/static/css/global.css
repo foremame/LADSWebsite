@@ -54,11 +54,6 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
-/* hide all html content by default, will later be unhidden with jquery when page is done loading all content
-html {
-  visibility: hidden;
-}*/
-
 .wrapper {
     max-width: 75rem;
     margin-left: auto;

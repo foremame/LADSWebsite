@@ -46,10 +46,8 @@ public class ActivityRunPeriodController {
         ActivityRunPeriod activityRunPeriod = new ActivityRunPeriod();
         activityRunPeriod.setActivityRunType(activityForm.getActivityType());
         activityRunPeriod.setRerun(true);
-        LocalDate startDate = LocalDate.parse(activityForm.getStartDate());
-        LocalDate endDate = LocalDate.parse(activityForm.getEndDate());
-        activityRunPeriod.setStartDate(startDate);
-        activityRunPeriod.setEndDate(endDate);
+        activityRunPeriod.setStartDate(LocalDate.parse(activityForm.getStartDate()));
+        activityRunPeriod.setEndDate(LocalDate.parse(activityForm.getEndDate()));
         Optional<ActivityRunPeriod> activityRunPeriodOptional;
         if (activityForm.getActivityType().equals("Event")) {
             Event event = eventService.getEventById(activityForm.getEventId()).orElseThrow(()->new RuntimeException("No event found."));
@@ -61,10 +59,8 @@ public class ActivityRunPeriodController {
             activityRunPeriod.setBanner(banner);
             activityRunPeriodOptional = activityRunPeriodService.getMostRecentActivityRunPeriodForActivity("Banner", activityForm.getBannerId());
         }
-        if (activityRunPeriodOptional.isEmpty()) {
-            throw new RuntimeException("This is a new run of an event/banner, no prior run can be found. If you wish to add a new event/banner, please use the correct form");
-        }
-        ActivityRunPeriod lastRun = activityRunPeriodOptional.get();
+        ActivityRunPeriod lastRun = activityRunPeriodOptional
+                .orElseThrow(()-> new RuntimeException("No prior run can be found. If you wish to add a new event/banner, please use the correct form"));
         activityRunPeriod.setRunNum(lastRun.getRunNum()+1);
         activityRunPeriodService.addNewActivityRunPeriod(activityRunPeriod);
 

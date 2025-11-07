@@ -8,9 +8,9 @@
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
 </head>
 <body>
-<div id="nav-bar">
+<div th:replace="fragments/header :: header">
 </div>
-<div id="container" class="container hidden">
+<div id="container" class="container">
     <div th:if="${param.success}">
         <div class="success-message">
             <p>Registration Successful! Login <a href="login.html">here</a></p>
