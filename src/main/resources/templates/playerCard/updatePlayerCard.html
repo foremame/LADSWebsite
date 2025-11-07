@@ -6,10 +6,15 @@
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
+    <script th:inline="javascript">
+        var selectedCard = /*[[${selectedCard}]]*/;
+    </script>
     <script type="text/javascript" th:src="@{/js/playerCard/updatePlayerCard.js}"></script>
 </head>
 <body>
-<div class="container">
+<div th:replace="fragments/header :: header">
+</div>
+<div id="container" class="container">
     <form name="playerCardForm" action="/playerCard/update" method="post">
         <div class="form-group" id="cardListDiv">
             <label for="cardNameSearch">Card Name:</label>

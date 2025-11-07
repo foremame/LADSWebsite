@@ -12,14 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class PlayerController {
@@ -40,21 +38,22 @@ public class PlayerController {
 
     @GetMapping("/home")
     public String loadHomePage(Model model, Principal principal) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        model.addAttribute("user", userDetails);
+        playerService.findByUsername(principal != null ? principal.getName() : null).ifPresent(player -> model.addAttribute("user", player));
         return "/home";
     }
 
     @GetMapping("/")
     public RedirectView directToHomePage(Principal principal, RedirectAttributes redirectAttributes) {
         RedirectView rv = new RedirectView("/home");
-        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
-        if (userDetails.getUsername() == null) {
-            return new RedirectView("/login");
-        }
         rv.setExposeModelAttributes(false);
-        redirectAttributes.addFlashAttribute("user", userDetails);
+        playerService.findByUsername(principal != null ? principal.getName() : null).ifPresent(player -> redirectAttributes.addFlashAttribute("user", player));
         return rv;
+    }
+
+    @GetMapping("/header")
+    public String getPageHeader(Model model, Principal principal) {
+        playerService.findByUsername(principal != null ? principal.getName() : null).ifPresent(player -> model.addAttribute("user", player));
+        return "/header";
     }
 
     @GetMapping("/register")
@@ -82,6 +81,12 @@ public class PlayerController {
     @GetMapping("/login")
     public String loadLoginPage(Model model) {
         return "/player/login";
+    }
+
+    @RequestMapping(value="/player/getCurrentUser", method= RequestMethod.GET)
+    @ResponseBody
+    public Player getCurrentSessionUser(Principal principal) {
+        return principal != null ? playerService.findByUsername(principal.getName()).orElse(null) : null;
     }
 
     // Default max bounty level for all bounties to 9. User can change this later as needed.

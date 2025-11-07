@@ -5,9 +5,12 @@
     <title>Add New Banner</title>
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
 </head>
 <body>
-<div class="container">
+<div th:replace="fragments/header :: header">
+</div>
+<div id="container" class="container">
     <p>Cost Per Card:</p>
     <table>
         <tr>

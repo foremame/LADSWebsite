@@ -5,10 +5,13 @@
     <title>Add New Resource Tracking</title>
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/CommonMethods.js}"></script>
     <script type="text/javascript" th:src="@{/js/resourceTracking/resourceTrackingFormPrep.js}"></script>
 </head>
 <body>
-<div class="container">
+<div th:replace="fragments/header :: header">
+</div>
+<div id="container" class="container">
     <form name="rtPrep" action="/resourceTracking/addPrep" method="post">
         <div id="selectPreviousDayDiv">
             <p>Load information from previous entry?</p>

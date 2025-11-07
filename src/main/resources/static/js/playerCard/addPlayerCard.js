@@ -10,11 +10,11 @@ $(document).ready(function(){
 
         if ($("#cardLevel").val() < 1 || $("#cardLevel").val() > 80) {
             issue = true;
-            errorText += "<p class='error-color'>Invalid card level, please choose a level between 1 - 80.</p>";
+            errorText += "<p class='error-message'>Invalid card level, please choose a level between 1 - 80.</p>";
         }
         if($("#rankType").val() == "") {
             issue = true;
-            errorText += "<p class='error-color'>Please select a card rank.</p>";
+            errorText += "<p class='error-message'>Please select a card rank.</p>";
         }
 
         params = {"cardId": $("input[name='cardId']:checked").val()};

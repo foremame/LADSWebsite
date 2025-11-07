@@ -77,13 +77,24 @@ function hideOtherCardsFromSearch(cardId, cardPullNum) {
     }
 }
 
+function hideItemsFromSearch(id, listId, itemNum) {
+    ul = itemNum != null ? document.getElementById(listId + "[" + itemNum + "]") : document.getElementById(listId);
+    li = ul.getElementsByTagName('li');
+    for (i=0; i < li.length; i++) {
+        var input = li[i].getElementsByTagName("input")[0];
+        if (input.value != id) {
+            li[i].style.display = "none";
+        }
+    }
+}
+
 function validateByUrl(url, params, issue, errorText, form) {
     url_get(url, params).done( function (msg){
         var validation = JSON.parse(msg);
 
         for (let curError of validation) {
             issue = true;
-            errorText += "<p class='error-color'>" + curError + "</p>";
+            errorText += "<p class='error-message'>" + curError + "</p>";
         }
 
         if (issue == true) {

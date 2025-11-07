@@ -10,18 +10,18 @@ $(document).ready(function(){
         if ($("#subType").val() == "Multi") {
             if ($("#loveInterestDiv").find('input').filter(':checked').length == 0) {
                 issue = true;
-                errorText += "<p class='error-color'>Please select at least one love interest</p>";
+                errorText += "<p class='error-message'>Please select at least one love interest</p>";
             }
         }
         else {
             if ($("#loveInterest").val() == "") {
                 issue = true;
-                errorText += "<p class='error-color'>Please select a love interest.</p>";
+                errorText += "<p class='error-message'>Please select a love interest.</p>";
             }
         }
         if ($("#mainType").val() == "" || $("#subType").val() == "") {
             issue = true;
-            errorText += "<p class='error-color'>Invalid banner type entered</p>";
+            errorText += "<p class='error-message'>Invalid banner type entered</p>";
         }
         var params = {"bannerName" : $("#name").val(), "startDate" : $("#startDate").val(), "endDate" : $("#endDate").val()};
         validateByUrl("/banner/validateBannerForm", params, issue, errorText, form);
